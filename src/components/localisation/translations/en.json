@@ -1,0 +1,8 @@
+{
+  "commonTranslations": {
+    "enterGTIN": "Enter GTIN",
+    "gtinHelper": "GTIN",
+    "confirmButton": "Confirm",
+    "cancelButton": "Cancel"
+  }
+}

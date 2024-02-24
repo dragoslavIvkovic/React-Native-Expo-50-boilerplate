@@ -1,0 +1,8 @@
+build
+coverage
+node_modules
+src/config.js
+src/api/
+README.md
+tsconfig.json
+tsconfig.build.json

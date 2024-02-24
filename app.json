@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "ketering.app",
+    "slug": "ketering",
+    "privacy": "unlisted",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/images/logo-lg.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo-sm.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.stryna.keteringapp" // This line is new
+    },
+    "web": {
+      "favicon": "./assets/images/logo-sm.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4d9214cf-4e4b-44b0-945f-5724e7b6c94c"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/4d9214cf-4e4b-44b0-945f-5724e7b6c94c"
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "plugins": [
+      "expo-build-properties"
+    ]
+  }
+}
