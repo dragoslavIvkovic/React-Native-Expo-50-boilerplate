@@ -1,16 +1,18 @@
 import React from 'react'
-import { useColorScheme } from 'react-native'
-import { DarkTheme, DefaultTheme, NavigationContainer, useTheme } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ClientHomeScreen from '@screens/ClientHomeScreen'
 import LoginScreen from '@screens/auth/LoginScreen'
+import { CustomDarkTheme, CustomLightTheme } from 'src/theme/theme'
+import { ThemeProvider, useThemeContext } from 'src/theme/ThemeProvider'
 
-// Assuming RootStackParamList is defined elsewhere in your project
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-export default function App() {
+const AppContent = () => {
+  const { isDarkTheme } = useThemeContext() // Ovo treba premestiti unutar komponente koja će koristiti kontekst
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={isDarkTheme ? CustomDarkTheme : CustomLightTheme}>
       <Stack.Navigator
         screenOptions={{
           headerShadowVisible: false,
@@ -21,5 +23,13 @@ export default function App() {
         <Stack.Screen name="ClientHomeScreen" component={ClientHomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+  )
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   )
 }

@@ -2,11 +2,13 @@ import React, { useState, useRef } from 'react'
 import { Alert, KeyboardAvoidingView, TextInput, Button, View, useColorScheme } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useUserStore } from '@store/UserState'
-import { handleAxiosError } from 'src/ERROR_HANDLER/handleAxiosError'
+import { handleAxiosError } from 'src/errorHandler/handleAxiosError'
 import { authApi } from 'src/api/generated/api-interface'
+import { useThemeContext } from 'src/theme/ThemeProvider'
 
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation()
+  const { toggleTheme } = useThemeContext()
 
   const [email, setEmail] = useState<string>('test@ketering.app')
   const [password, setPassword] = useState<string>('Password123')
@@ -49,6 +51,7 @@ const LoginScreen: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
+      <Button onPress={toggleTheme} title="Promeni temu" />
       <TextInput
         placeholder="Email"
         value={email}
@@ -80,7 +83,6 @@ const LoginScreen: React.FC = () => {
           padding: 10
         }}
       />
-
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
         <Button title="Login" onPress={loginUser} />
         <View style={{ width: 20 }} />
