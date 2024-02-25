@@ -4,6 +4,7 @@
     "slug": "ketering",
     "privacy": "unlisted",
     "version": "1.0.0",
+ 
     "platforms": [
       "ios",
       "android",
@@ -11,7 +12,7 @@
     ],
     "orientation": "portrait",
     "icon": "./assets/images/logo-lg.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
