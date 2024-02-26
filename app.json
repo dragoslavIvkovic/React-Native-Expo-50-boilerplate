@@ -4,7 +4,6 @@
     "slug": "ketering",
     "privacy": "unlisted",
     "version": "1.0.0",
- 
     "platforms": [
       "ios",
       "android",
@@ -29,7 +28,7 @@
         "foregroundImage": "./assets/images/logo-sm.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.stryna.keteringapp" // This line is new
+      "package": "com.stryna.keteringapp"
     },
     "web": {
       "favicon": "./assets/images/logo-sm.png"
@@ -46,7 +45,8 @@
       "policy": "sdkVersion"
     },
     "plugins": [
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-localization"
     ]
   }
 }

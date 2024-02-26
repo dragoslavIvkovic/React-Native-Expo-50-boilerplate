@@ -3085,6 +3085,43 @@ export interface ListMenuConstraintResponse {
 /**
  * 
  * @export
+ * @interface ListMenuConstraintWithoutMenuResponse
+ */
+export interface ListMenuConstraintWithoutMenuResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListMenuConstraintWithoutMenuResponse
+     */
+    'code': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ListMenuConstraintWithoutMenuResponse
+     */
+    'success': boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ListMenuConstraintWithoutMenuResponse
+     */
+    'errors': Array<string>;
+    /**
+     * 
+     * @type {Array<MenuConstraintWithoutMenuResponse>}
+     * @memberof ListMenuConstraintWithoutMenuResponse
+     */
+    'data': Array<MenuConstraintWithoutMenuResponse>;
+    /**
+     * 
+     * @type {ListResponsePagination}
+     * @memberof ListMenuConstraintWithoutMenuResponse
+     */
+    'pagination': ListResponsePagination;
+}
+/**
+ * 
+ * @export
  * @interface ListMenuMealResponse
  */
 export interface ListMenuMealResponse {
@@ -5047,6 +5084,80 @@ export type MenuConstraintResponseOrderDayEnum = typeof MenuConstraintResponseOr
 /**
  * 
  * @export
+ * @interface MenuConstraintWithoutMenuResponse
+ */
+export interface MenuConstraintWithoutMenuResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'breakfast': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'lunch': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'dinner': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'snack': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'dessert': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'other': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'orderDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'orderDay'?: MenuConstraintWithoutMenuResponseOrderDayEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuConstraintWithoutMenuResponse
+     */
+    'id': string;
+}
+
+export const MenuConstraintWithoutMenuResponseOrderDayEnum = {
+    Monday: 'MONDAY',
+    Tuesday: 'TUESDAY',
+    Wednesday: 'WEDNESDAY',
+    Thursday: 'THURSDAY',
+    Friday: 'FRIDAY',
+    Saturday: 'SATURDAY',
+    Sunday: 'SUNDAY'
+} as const;
+
+export type MenuConstraintWithoutMenuResponseOrderDayEnum = typeof MenuConstraintWithoutMenuResponseOrderDayEnum[keyof typeof MenuConstraintWithoutMenuResponseOrderDayEnum];
+
+/**
+ * 
+ * @export
  * @interface MenuDto
  */
 export interface MenuDto {
@@ -5742,12 +5853,6 @@ export interface MenuTypeDto {
      * @memberof MenuTypeDto
      */
     'description': string;
-    /**
-     * 
-     * @type {Array<Array>}
-     * @memberof MenuTypeDto
-     */
-    'menus': Array<Array>;
 }
 /**
  * 
@@ -5769,16 +5874,16 @@ export interface MenuTypeResponse {
     'description': string;
     /**
      * 
-     * @type {Array<Array>}
-     * @memberof MenuTypeResponse
-     */
-    'menus': Array<Array>;
-    /**
-     * 
      * @type {string}
      * @memberof MenuTypeResponse
      */
     'id': string;
+    /**
+     * 
+     * @type {Array<MenuWithoutTypeAndCompanyResponse>}
+     * @memberof MenuTypeResponse
+     */
+    'menus': Array<MenuWithoutTypeAndCompanyResponse>;
 }
 /**
  * 
@@ -5920,6 +6025,49 @@ export interface MenuWithoutCompanyResponse {
      * 
      * @type {Array<string>}
      * @memberof MenuWithoutCompanyResponse
+     */
+    'pictures': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface MenuWithoutTypeAndCompanyResponse
+ */
+export interface MenuWithoutTypeAndCompanyResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuWithoutTypeAndCompanyResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuWithoutTypeAndCompanyResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuWithoutTypeAndCompanyResponse
+     */
+    'from'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuWithoutTypeAndCompanyResponse
+     */
+    'until'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MenuWithoutTypeAndCompanyResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MenuWithoutTypeAndCompanyResponse
      */
     'pictures': Array<string>;
 }
@@ -7169,12 +7317,6 @@ export interface UpdateMenuTypeDto {
      * @memberof UpdateMenuTypeDto
      */
     'description'?: string;
-    /**
-     * 
-     * @type {Array<Array>}
-     * @memberof UpdateMenuTypeDto
-     */
-    'menus'?: Array<Array>;
 }
 /**
  * 
@@ -8087,10 +8229,10 @@ export interface VerifyPhoneDto {
     'countryNumberPrefix': string;
     /**
      * The phone number without country prefix
-     * @type {number}
+     * @type {string}
      * @memberof VerifyPhoneDto
      */
-    'phoneNumber': number;
+    'phoneNumber': string;
     /**
      * The verification token
      * @type {number}
@@ -9658,17 +9800,17 @@ export const CitiesSharedApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Get a specific city by its name
+         * Get a specific city by its English name
          * @summary Get city by name
-         * @param {string} name 
+         * @param {string} nameEnglish 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        citiesSharedControllerFindByName: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('citiesSharedControllerFindByName', 'name', name)
-            const localVarPath = `/api/v1/shared/cities/by-name/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+        citiesSharedControllerFindByName: async (nameEnglish: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'nameEnglish' is not null or undefined
+            assertParamExists('citiesSharedControllerFindByName', 'nameEnglish', nameEnglish)
+            const localVarPath = `/api/v1/shared/cities/by-name/{nameEnglish}`
+                .replace(`{${"nameEnglish"}}`, encodeURIComponent(String(nameEnglish)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9807,14 +9949,14 @@ export const CitiesSharedApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a specific city by its name
+         * Get a specific city by its English name
          * @summary Get city by name
-         * @param {string} name 
+         * @param {string} nameEnglish 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async citiesSharedControllerFindByName(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenericCityResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.citiesSharedControllerFindByName(name, options);
+        async citiesSharedControllerFindByName(nameEnglish: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenericCityResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.citiesSharedControllerFindByName(nameEnglish, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9874,14 +10016,14 @@ export const CitiesSharedApiFactory = function (configuration?: Configuration, b
             return localVarFp.citiesSharedControllerFindById(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a specific city by its name
+         * Get a specific city by its English name
          * @summary Get city by name
-         * @param {string} name 
+         * @param {string} nameEnglish 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        citiesSharedControllerFindByName(name: string, options?: any): AxiosPromise<GenericCityResponse> {
-            return localVarFp.citiesSharedControllerFindByName(name, options).then((request) => request(axios, basePath));
+        citiesSharedControllerFindByName(nameEnglish: string, options?: any): AxiosPromise<GenericCityResponse> {
+            return localVarFp.citiesSharedControllerFindByName(nameEnglish, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a specific city by its postal code
@@ -9942,15 +10084,15 @@ export class CitiesSharedApi extends BaseAPI {
     }
 
     /**
-     * Get a specific city by its name
+     * Get a specific city by its English name
      * @summary Get city by name
-     * @param {string} name 
+     * @param {string} nameEnglish 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CitiesSharedApi
      */
-    public citiesSharedControllerFindByName(name: string, options?: AxiosRequestConfig) {
-        return CitiesSharedApiFp(this.configuration).citiesSharedControllerFindByName(name, options).then((request) => request(this.axios, this.basePath));
+    public citiesSharedControllerFindByName(nameEnglish: string, options?: AxiosRequestConfig) {
+        return CitiesSharedApiFp(this.configuration).citiesSharedControllerFindByName(nameEnglish, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11779,19 +11921,19 @@ export const DeliveryInternalApiAxiosParamCreator = function (configuration?: Co
         /**
          * Get all deliveries for the company
          * @summary Get all deliveries for the company
-         * @param {string} [companyId] The ID of the company
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {DeliveryAdminControllerFindAllOrderEnum} [order] 
          * @param {DeliveryAdminControllerFindAllSortByEnum} [sortBy] 
          * @param {string} [dateForDelivery] 
          * @param {string} [orderId] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deliveryAdminControllerFindAll: async (companyId?: string, page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/internal/delivery/company/{companyId}`
-                .replace(`{${"companyId"}}`, encodeURIComponent(String(companyId)));
+        deliveryAdminControllerFindAll: async (page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/internal/delivery/company/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -11931,18 +12073,18 @@ export const DeliveryInternalApiFp = function(configuration?: Configuration) {
         /**
          * Get all deliveries for the company
          * @summary Get all deliveries for the company
-         * @param {string} [companyId] The ID of the company
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {DeliveryAdminControllerFindAllOrderEnum} [order] 
          * @param {DeliveryAdminControllerFindAllSortByEnum} [sortBy] 
          * @param {string} [dateForDelivery] 
          * @param {string} [orderId] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deliveryAdminControllerFindAll(companyId?: string, page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrderDateWithoutMealsAdminResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deliveryAdminControllerFindAll(companyId, page, limit, order, sortBy, dateForDelivery, orderId, options);
+        async deliveryAdminControllerFindAll(page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrderDateWithoutMealsAdminResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deliveryAdminControllerFindAll(page, limit, order, sortBy, dateForDelivery, orderId, id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -11980,18 +12122,18 @@ export const DeliveryInternalApiFactory = function (configuration?: Configuratio
         /**
          * Get all deliveries for the company
          * @summary Get all deliveries for the company
-         * @param {string} [companyId] The ID of the company
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {DeliveryAdminControllerFindAllOrderEnum} [order] 
          * @param {DeliveryAdminControllerFindAllSortByEnum} [sortBy] 
          * @param {string} [dateForDelivery] 
          * @param {string} [orderId] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deliveryAdminControllerFindAll(companyId?: string, page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, options?: any): AxiosPromise<ListOrderDateWithoutMealsAdminResponse> {
-            return localVarFp.deliveryAdminControllerFindAll(companyId, page, limit, order, sortBy, dateForDelivery, orderId, options).then((request) => request(axios, basePath));
+        deliveryAdminControllerFindAll(page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, id?: string, options?: any): AxiosPromise<ListOrderDateWithoutMealsAdminResponse> {
+            return localVarFp.deliveryAdminControllerFindAll(page, limit, order, sortBy, dateForDelivery, orderId, id, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an order date
@@ -12026,19 +12168,19 @@ export class DeliveryInternalApi extends BaseAPI {
     /**
      * Get all deliveries for the company
      * @summary Get all deliveries for the company
-     * @param {string} [companyId] The ID of the company
      * @param {number} [page] 
      * @param {number} [limit] 
      * @param {DeliveryAdminControllerFindAllOrderEnum} [order] 
      * @param {DeliveryAdminControllerFindAllSortByEnum} [sortBy] 
      * @param {string} [dateForDelivery] 
      * @param {string} [orderId] 
+     * @param {string} [id] The ID of the company
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeliveryInternalApi
      */
-    public deliveryAdminControllerFindAll(companyId?: string, page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, options?: AxiosRequestConfig) {
-        return DeliveryInternalApiFp(this.configuration).deliveryAdminControllerFindAll(companyId, page, limit, order, sortBy, dateForDelivery, orderId, options).then((request) => request(this.axios, this.basePath));
+    public deliveryAdminControllerFindAll(page?: number, limit?: number, order?: DeliveryAdminControllerFindAllOrderEnum, sortBy?: DeliveryAdminControllerFindAllSortByEnum, dateForDelivery?: string, orderId?: string, id?: string, options?: AxiosRequestConfig) {
+        return DeliveryInternalApiFp(this.configuration).deliveryAdminControllerFindAll(page, limit, order, sortBy, dateForDelivery, orderId, id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15556,7 +15698,7 @@ export const MenuConstraintInternalApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async menuConstraintAdminControllerGetAllByMenu(id: string, page?: number, limit?: number, order?: MenuConstraintAdminControllerGetAllByMenuOrderEnum, sortBy?: MenuConstraintAdminControllerGetAllByMenuSortByEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListMenuConstraintResponse>> {
+        async menuConstraintAdminControllerGetAllByMenu(id: string, page?: number, limit?: number, order?: MenuConstraintAdminControllerGetAllByMenuOrderEnum, sortBy?: MenuConstraintAdminControllerGetAllByMenuSortByEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListMenuConstraintWithoutMenuResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.menuConstraintAdminControllerGetAllByMenu(id, page, limit, order, sortBy, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15639,7 +15781,7 @@ export const MenuConstraintInternalApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        menuConstraintAdminControllerGetAllByMenu(id: string, page?: number, limit?: number, order?: MenuConstraintAdminControllerGetAllByMenuOrderEnum, sortBy?: MenuConstraintAdminControllerGetAllByMenuSortByEnum, options?: any): AxiosPromise<ListMenuConstraintResponse> {
+        menuConstraintAdminControllerGetAllByMenu(id: string, page?: number, limit?: number, order?: MenuConstraintAdminControllerGetAllByMenuOrderEnum, sortBy?: MenuConstraintAdminControllerGetAllByMenuSortByEnum, options?: any): AxiosPromise<ListMenuConstraintWithoutMenuResponse> {
             return localVarFp.menuConstraintAdminControllerGetAllByMenu(id, page, limit, order, sortBy, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19829,20 +19971,18 @@ export const OrdersInternalApiAxiosParamCreator = function (configuration?: Conf
         /**
          * Get all orders for the company
          * @summary Get all orders for the company
-         * @param {string} companyId 
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {OrdersAdminControllerFindAllOrderEnum} [order] 
          * @param {OrdersAdminControllerFindAllSortByEnum} [sortBy] 
          * @param {string} [userId] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersAdminControllerFindAll: async (companyId: string, page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'companyId' is not null or undefined
-            assertParamExists('ordersAdminControllerFindAll', 'companyId', companyId)
-            const localVarPath = `/api/v1/internal/orders/company/{companyId}`
-                .replace(`{${"companyId"}}`, encodeURIComponent(String(companyId)));
+        ordersAdminControllerFindAll: async (page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/internal/orders/company/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -19893,15 +20033,13 @@ export const OrdersInternalApiAxiosParamCreator = function (configuration?: Conf
          * Get multiple orders by their IDs
          * @summary Get orders by IDs
          * @param {Array<string>} ids 
-         * @param {number} [page] 
-         * @param {number} [limit] 
          * @param {OrdersAdminControllerFindManyByIdsOrderEnum} [order] 
          * @param {OrdersAdminControllerFindManyByIdsSortByEnum} [sortBy] 
          * @param {string} [userId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersAdminControllerFindManyByIds: async (ids: Array<string>, page?: number, limit?: number, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        ordersAdminControllerFindManyByIds: async (ids: Array<string>, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ids' is not null or undefined
             assertParamExists('ordersAdminControllerFindManyByIds', 'ids', ids)
             const localVarPath = `/api/v1/internal/orders/byIds/{ids}`
@@ -19920,14 +20058,6 @@ export const OrdersInternalApiAxiosParamCreator = function (configuration?: Conf
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
 
             if (order !== undefined) {
                 localVarQueryParameter['order'] = order;
@@ -20085,33 +20215,31 @@ export const OrdersInternalApiFp = function(configuration?: Configuration) {
         /**
          * Get all orders for the company
          * @summary Get all orders for the company
-         * @param {string} companyId 
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {OrdersAdminControllerFindAllOrderEnum} [order] 
          * @param {OrdersAdminControllerFindAllSortByEnum} [sortBy] 
          * @param {string} [userId] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersAdminControllerFindAll(companyId: string, page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrderAdminWithoutCompanyAndMealsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.ordersAdminControllerFindAll(companyId, page, limit, order, sortBy, userId, options);
+        async ordersAdminControllerFindAll(page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrderAdminWithoutCompanyAndMealsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ordersAdminControllerFindAll(page, limit, order, sortBy, userId, id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Get multiple orders by their IDs
          * @summary Get orders by IDs
          * @param {Array<string>} ids 
-         * @param {number} [page] 
-         * @param {number} [limit] 
          * @param {OrdersAdminControllerFindManyByIdsOrderEnum} [order] 
          * @param {OrdersAdminControllerFindManyByIdsSortByEnum} [sortBy] 
          * @param {string} [userId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersAdminControllerFindManyByIds(ids: Array<string>, page?: number, limit?: number, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenericOrdersAdminResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.ordersAdminControllerFindManyByIds(ids, page, limit, order, sortBy, userId, options);
+        async ordersAdminControllerFindManyByIds(ids: Array<string>, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenericOrdersAdminResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ordersAdminControllerFindManyByIds(ids, order, sortBy, userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -20161,32 +20289,30 @@ export const OrdersInternalApiFactory = function (configuration?: Configuration,
         /**
          * Get all orders for the company
          * @summary Get all orders for the company
-         * @param {string} companyId 
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {OrdersAdminControllerFindAllOrderEnum} [order] 
          * @param {OrdersAdminControllerFindAllSortByEnum} [sortBy] 
          * @param {string} [userId] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersAdminControllerFindAll(companyId: string, page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, options?: any): AxiosPromise<ListOrderAdminWithoutCompanyAndMealsResponse> {
-            return localVarFp.ordersAdminControllerFindAll(companyId, page, limit, order, sortBy, userId, options).then((request) => request(axios, basePath));
+        ordersAdminControllerFindAll(page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, id?: string, options?: any): AxiosPromise<ListOrderAdminWithoutCompanyAndMealsResponse> {
+            return localVarFp.ordersAdminControllerFindAll(page, limit, order, sortBy, userId, id, options).then((request) => request(axios, basePath));
         },
         /**
          * Get multiple orders by their IDs
          * @summary Get orders by IDs
          * @param {Array<string>} ids 
-         * @param {number} [page] 
-         * @param {number} [limit] 
          * @param {OrdersAdminControllerFindManyByIdsOrderEnum} [order] 
          * @param {OrdersAdminControllerFindManyByIdsSortByEnum} [sortBy] 
          * @param {string} [userId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersAdminControllerFindManyByIds(ids: Array<string>, page?: number, limit?: number, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options?: any): AxiosPromise<GenericOrdersAdminResponse> {
-            return localVarFp.ordersAdminControllerFindManyByIds(ids, page, limit, order, sortBy, userId, options).then((request) => request(axios, basePath));
+        ordersAdminControllerFindManyByIds(ids: Array<string>, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options?: any): AxiosPromise<GenericOrdersAdminResponse> {
+            return localVarFp.ordersAdminControllerFindManyByIds(ids, order, sortBy, userId, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an order by id
@@ -20232,26 +20358,24 @@ export class OrdersInternalApi extends BaseAPI {
     /**
      * Get all orders for the company
      * @summary Get all orders for the company
-     * @param {string} companyId 
      * @param {number} [page] 
      * @param {number} [limit] 
      * @param {OrdersAdminControllerFindAllOrderEnum} [order] 
      * @param {OrdersAdminControllerFindAllSortByEnum} [sortBy] 
      * @param {string} [userId] 
+     * @param {string} [id] The ID of the company
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersInternalApi
      */
-    public ordersAdminControllerFindAll(companyId: string, page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, options?: AxiosRequestConfig) {
-        return OrdersInternalApiFp(this.configuration).ordersAdminControllerFindAll(companyId, page, limit, order, sortBy, userId, options).then((request) => request(this.axios, this.basePath));
+    public ordersAdminControllerFindAll(page?: number, limit?: number, order?: OrdersAdminControllerFindAllOrderEnum, sortBy?: OrdersAdminControllerFindAllSortByEnum, userId?: string, id?: string, options?: AxiosRequestConfig) {
+        return OrdersInternalApiFp(this.configuration).ordersAdminControllerFindAll(page, limit, order, sortBy, userId, id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get multiple orders by their IDs
      * @summary Get orders by IDs
      * @param {Array<string>} ids 
-     * @param {number} [page] 
-     * @param {number} [limit] 
      * @param {OrdersAdminControllerFindManyByIdsOrderEnum} [order] 
      * @param {OrdersAdminControllerFindManyByIdsSortByEnum} [sortBy] 
      * @param {string} [userId] 
@@ -20259,8 +20383,8 @@ export class OrdersInternalApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrdersInternalApi
      */
-    public ordersAdminControllerFindManyByIds(ids: Array<string>, page?: number, limit?: number, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options?: AxiosRequestConfig) {
-        return OrdersInternalApiFp(this.configuration).ordersAdminControllerFindManyByIds(ids, page, limit, order, sortBy, userId, options).then((request) => request(this.axios, this.basePath));
+    public ordersAdminControllerFindManyByIds(ids: Array<string>, order?: OrdersAdminControllerFindManyByIdsOrderEnum, sortBy?: OrdersAdminControllerFindManyByIdsSortByEnum, userId?: string, options?: AxiosRequestConfig) {
+        return OrdersInternalApiFp(this.configuration).ordersAdminControllerFindManyByIds(ids, order, sortBy, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -21829,7 +21953,7 @@ export const UsersExternalApiAxiosParamCreator = function (configuration?: Confi
          * @throws {RequiredError}
          */
         usersControllerGetUserById: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/external/users/{id}`;
+            const localVarPath = `/api/v1/external/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -21969,10 +22093,13 @@ export const UsersExternalApiAxiosParamCreator = function (configuration?: Confi
         /**
          * Being used to upload profile photo
          * @summary Upload profile photo
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersControllerUploadProfilePhoto: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        usersControllerUploadProfilePhoto: async (file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('usersControllerUploadProfilePhoto', 'file', file)
             const localVarPath = `/api/v1/external/users/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -21984,16 +22111,24 @@ export const UsersExternalApiAxiosParamCreator = function (configuration?: Confi
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -22087,11 +22222,12 @@ export const UsersExternalApiFp = function(configuration?: Configuration) {
         /**
          * Being used to upload profile photo
          * @summary Upload profile photo
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersControllerUploadProfilePhoto(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessDeterminationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerUploadProfilePhoto(options);
+        async usersControllerUploadProfilePhoto(file: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessDeterminationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerUploadProfilePhoto(file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -22174,11 +22310,12 @@ export const UsersExternalApiFactory = function (configuration?: Configuration, 
         /**
          * Being used to upload profile photo
          * @summary Upload profile photo
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersControllerUploadProfilePhoto(options?: any): AxiosPromise<SuccessDeterminationResponse> {
-            return localVarFp.usersControllerUploadProfilePhoto(options).then((request) => request(axios, basePath));
+        usersControllerUploadProfilePhoto(file: File, options?: any): AxiosPromise<SuccessDeterminationResponse> {
+            return localVarFp.usersControllerUploadProfilePhoto(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -22274,12 +22411,13 @@ export class UsersExternalApi extends BaseAPI {
     /**
      * Being used to upload profile photo
      * @summary Upload profile photo
+     * @param {File} file 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersExternalApi
      */
-    public usersControllerUploadProfilePhoto(options?: AxiosRequestConfig) {
-        return UsersExternalApiFp(this.configuration).usersControllerUploadProfilePhoto(options).then((request) => request(this.axios, this.basePath));
+    public usersControllerUploadProfilePhoto(file: File, options?: AxiosRequestConfig) {
+        return UsersExternalApiFp(this.configuration).usersControllerUploadProfilePhoto(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -22431,20 +22569,18 @@ export const UsersInternalApiAxiosParamCreator = function (configuration?: Confi
         /**
          * Get all users by company id
          * @summary Get all users by company id
-         * @param {string} companyId 
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {string} [search] 
          * @param {UsersAdminControllerFindAllByCompanyOrderEnum} [order] 
          * @param {UsersAdminControllerFindAllByCompanySortByEnum} [sortBy] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersAdminControllerFindAllByCompany: async (companyId: string, page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'companyId' is not null or undefined
-            assertParamExists('usersAdminControllerFindAllByCompany', 'companyId', companyId)
-            const localVarPath = `/api/v1/internal/users/company/{companyId}`
-                .replace(`{${"companyId"}}`, encodeURIComponent(String(companyId)));
+        usersAdminControllerFindAllByCompany: async (page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/internal/users/company/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -22682,17 +22818,17 @@ export const UsersInternalApiFp = function(configuration?: Configuration) {
         /**
          * Get all users by company id
          * @summary Get all users by company id
-         * @param {string} companyId 
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {string} [search] 
          * @param {UsersAdminControllerFindAllByCompanyOrderEnum} [order] 
          * @param {UsersAdminControllerFindAllByCompanySortByEnum} [sortBy] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersAdminControllerFindAllByCompany(companyId: string, page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListUserWithRoleResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersAdminControllerFindAllByCompany(companyId, page, limit, search, order, sortBy, options);
+        async usersAdminControllerFindAllByCompany(page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListUserWithRoleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersAdminControllerFindAllByCompany(page, limit, search, order, sortBy, id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -22780,17 +22916,17 @@ export const UsersInternalApiFactory = function (configuration?: Configuration, 
         /**
          * Get all users by company id
          * @summary Get all users by company id
-         * @param {string} companyId 
          * @param {number} [page] 
          * @param {number} [limit] 
          * @param {string} [search] 
          * @param {UsersAdminControllerFindAllByCompanyOrderEnum} [order] 
          * @param {UsersAdminControllerFindAllByCompanySortByEnum} [sortBy] 
+         * @param {string} [id] The ID of the company
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersAdminControllerFindAllByCompany(companyId: string, page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, options?: any): AxiosPromise<ListUserWithRoleResponse> {
-            return localVarFp.usersAdminControllerFindAllByCompany(companyId, page, limit, search, order, sortBy, options).then((request) => request(axios, basePath));
+        usersAdminControllerFindAllByCompany(page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, id?: string, options?: any): AxiosPromise<ListUserWithRoleResponse> {
+            return localVarFp.usersAdminControllerFindAllByCompany(page, limit, search, order, sortBy, id, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all client users by superadmin
@@ -22880,18 +23016,18 @@ export class UsersInternalApi extends BaseAPI {
     /**
      * Get all users by company id
      * @summary Get all users by company id
-     * @param {string} companyId 
      * @param {number} [page] 
      * @param {number} [limit] 
      * @param {string} [search] 
      * @param {UsersAdminControllerFindAllByCompanyOrderEnum} [order] 
      * @param {UsersAdminControllerFindAllByCompanySortByEnum} [sortBy] 
+     * @param {string} [id] The ID of the company
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersInternalApi
      */
-    public usersAdminControllerFindAllByCompany(companyId: string, page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, options?: AxiosRequestConfig) {
-        return UsersInternalApiFp(this.configuration).usersAdminControllerFindAllByCompany(companyId, page, limit, search, order, sortBy, options).then((request) => request(this.axios, this.basePath));
+    public usersAdminControllerFindAllByCompany(page?: number, limit?: number, search?: string, order?: UsersAdminControllerFindAllByCompanyOrderEnum, sortBy?: UsersAdminControllerFindAllByCompanySortByEnum, id?: string, options?: AxiosRequestConfig) {
+        return UsersInternalApiFp(this.configuration).usersAdminControllerFindAllByCompany(page, limit, search, order, sortBy, id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

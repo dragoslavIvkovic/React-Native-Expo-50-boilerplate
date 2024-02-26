@@ -1,8 +1,6 @@
 {
   "commonTranslations": {
-    "enterGTIN": "Enter GTIN",
-    "gtinHelper": "GTIN",
-    "confirmButton": "Confirm",
-    "cancelButton": "Cancel"
+    "loginButton": "Login",
+    "changeTheme": "Change theme"
   }
 }

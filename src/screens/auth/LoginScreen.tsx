@@ -1,15 +1,18 @@
 import React, { useState, useRef } from 'react'
-import { Alert, KeyboardAvoidingView, TextInput, Button, View, useColorScheme } from 'react-native'
+import { Alert, KeyboardAvoidingView, TextInput, View, useColorScheme } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useUserStore } from '@store/UserState'
 import { handleAxiosError } from 'src/errorHandler/handleAxiosError'
 import { authApi } from 'src/api/generated/api-interface'
 import { useThemeContext } from 'src/theme/ThemeProvider'
+import HeaderLocalization from '@components/Header/HeaderLocalization'
+import { useTranslation } from 'react-i18next'
+import Button from 'src/styledComponents/Button'
 
 const LoginScreen: React.FC = () => {
+  const { t } = useTranslation()
   const navigation = useNavigation()
   const { toggleTheme } = useThemeContext()
-
   const [email, setEmail] = useState<string>('test@ketering.app')
   const [password, setPassword] = useState<string>('Password123')
   const [rememberMe, setRememberMe] = useState<boolean>(true)
@@ -44,6 +47,7 @@ const LoginScreen: React.FC = () => {
     }
   }
 
+  const isSubmitButtonDisabled = email === '' || password === ''
   return (
     <KeyboardAvoidingView
       style={{
@@ -51,7 +55,14 @@ const LoginScreen: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-      <Button onPress={toggleTheme} title="Promeni temu" />
+      <HeaderLocalization />
+      <Button
+        disabled={isSubmitButtonDisabled}
+        onPress={toggleTheme}
+        variant="small"
+        title={t('commonTranslations.changeTheme')}
+      />
+
       <TextInput
         placeholder="Email"
         value={email}
@@ -84,7 +95,13 @@ const LoginScreen: React.FC = () => {
         }}
       />
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
-        <Button title="Login" onPress={loginUser} />
+        <Button
+          disabled={isSubmitButtonDisabled}
+          onPress={loginUser}
+          variant="small"
+          title={t('commonTranslations.loginButton')}
+        />
+
         <View style={{ width: 20 }} />
       </View>
     </KeyboardAvoidingView>
