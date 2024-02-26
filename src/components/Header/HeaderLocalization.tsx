@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
- 
+import { getLocales } from 'expo-localization'
+
 import { useLanguageStore } from '@store/LocalizationStore' // Pretpostavka da je ovo ispravan put do tvog store-a
 import i18n from '@components/localisation/i18n'
 
 const HeaderLocalization: React.FC = () => {
   const { language, setLanguage } = useLanguageStore()
   const [flag, setFlag] = useState<string>(language === 'en' ? '🇬🇧' : '🇩🇪')
+  const deviceLanguage = getLocales()[0].languageCode
 
+  console.log('deviceLanguage', deviceLanguage)
   useEffect(() => {
     setFlag(language === 'en' ? '🇬🇧' : 'RS')
   }, [language])

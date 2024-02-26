@@ -21,14 +21,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to improve the user experience.",
+        "NSLocationAlwaysUsageDescription": "This app uses your location to provide extended features."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo-sm.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.stryna.keteringapp"
+      "package": "com.stryna.keteringapp",
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "web": {
       "favicon": "./assets/images/logo-sm.png"
@@ -48,5 +53,15 @@
       "expo-build-properties",
       "expo-localization"
     ]
+  },
+  "cli": {
+    "version": ">= 3.5.2",
+    "requireCommit": false
+  },
+  "build": {
+    
+  },
+  "submit": {
+    "production": {}
   }
 }
