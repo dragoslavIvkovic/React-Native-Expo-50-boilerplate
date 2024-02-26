@@ -6,6 +6,7 @@ import ClientHomeScreen from '@screens/ClientHomeScreen'
 import LoginScreen from '@screens/auth/LoginScreen'
 import { CustomDarkTheme, CustomLightTheme } from 'src/theme/theme'
 import { ThemeProvider, useThemeContext } from 'src/theme/ThemeProvider'
+import { RootStackParamList } from 'src/navigation/RootStackParamList'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 

@@ -1,9 +1,9 @@
-import { useEffect, useState, forwardRef } from 'react'
-import { TextInput, StyleSheet, View, Text } from 'react-native'
-import * as ExpoZebraScanner from 'expo-zebra-scanner'
-import commonStyles from '@styledComponents/commonStyles'
+import React, { useEffect, useState, forwardRef, Ref } from 'react'
+import { TextInput, StyleSheet, View, Text, TextInputProps } from 'react-native'
+// import * as ExpoTextInput from 'expo-zebra-scanner'; // Ako ne koristite ovaj import, možete ga izostaviti ili zakomentarisati
+// import commonStyles from '@styledComponents/commonStyles'; // Ako commonStyles ne postoji, definisati stilove unutar ove komponente
 
-type ZebraScannerInputProps = {
+interface InputProps extends TextInputProps {
   value: string
   onChange: (value: string) => void
   helperText?: string
@@ -17,7 +17,7 @@ type ZebraScannerInputProps = {
   keyboardType?: 'numeric' | 'default' | 'email-address'
 }
 
-const ZebraScannerInput = forwardRef<TextInput, ZebraScannerInputProps>(
+const TextInputInput = forwardRef<TextInput, InputProps>(
   (
     {
       value,
@@ -32,8 +32,8 @@ const ZebraScannerInput = forwardRef<TextInput, ZebraScannerInputProps>(
       keyboardType = 'default',
       autoFocus = false,
       ...otherProps
-    },
-    ref
+    }: InputProps,
+    ref: Ref<TextInput>
   ) => {
     const [isFocused, setIsFocused] = useState(false)
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderColor: 'red'
   },
   input: {
-    width: 300,
+    width: '100%', // Changed to fill container width
     borderColor: '#ccc',
     borderWidth: 1,
     padding: 10,
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
     height: 42,
     borderRadius: 5
   },
-  headerText: {
-    fontSize: 24,
-    marginTop: 8,
-    marginBottom: 8,
-    textAlign: 'center'
+  helperText: {
+    fontSize: 12,
+    color: 'gray',
+    paddingHorizontal: 5,
+    marginTop: 4 // Adjusted for spacing
   }
 })
 
-export default ZebraScannerInput
+export default TextInputInput

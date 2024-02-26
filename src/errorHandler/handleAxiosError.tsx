@@ -14,12 +14,7 @@ export const handleAxiosError = (error: unknown, t: TFunction): void => {
 
   if (axiosError.response && Array.isArray(axiosError.response.data.errors)) {
     const statusERROR = axiosError.response.data.status
-    console.log(
-      'statusERROR',
-      statusERROR,
-      axiosError.response.data.errors,
-      axiosError.response.data.detail
-    )
+
     if (statusERROR === 500) {
       const errorMessage500 = axiosError.response.data.detail
       console.log('errorMessage500', errorMessage500)
