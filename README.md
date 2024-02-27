@@ -97,4 +97,4 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 
  
-© 2023 Creen. All rights reserved.
+© 2024 Strina. All rights reserved.
