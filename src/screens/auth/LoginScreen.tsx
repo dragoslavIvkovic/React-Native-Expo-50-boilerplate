@@ -8,6 +8,8 @@ import { useThemeContext } from 'src/theme/ThemeProvider'
 import HeaderLocalization from '@components/Header/HeaderLocalization'
 import { useTranslation } from 'react-i18next'
 import Button from 'src/styledComponents/Button'
+import TextInputComponent from 'src/styledComponents/TextInput'
+import ThemeToggleButton from '@components/ThemeToggleButton'
 
 const LoginScreen: React.FC = () => {
   const { t } = useTranslation()
@@ -56,49 +58,28 @@ const LoginScreen: React.FC = () => {
         alignItems: 'center'
       }}>
       <HeaderLocalization />
-      <Button
-        disabled={isSubmitButtonDisabled}
-        onPress={toggleTheme}
-        variant="small"
-        title={t('commonTranslations.changeTheme')}
-      />
-
-      <TextInput
-        placeholder="Email"
+      <ThemeToggleButton />
+      <TextInputComponent
+        autoFocus={true}
         value={email}
+        placeholder="Email"
         onChangeText={setEmail}
         onSubmitEditing={() => passwordInputRef.current?.focus()}
-        style={{
-          height: 50,
-          borderColor: 'gray',
-          borderWidth: 1,
-          width: 300,
-          textAlign: 'center',
-          margin: 5,
-          padding: 10
-        }}
       />
-      <TextInput
+      <TextInputComponent
         ref={passwordInputRef}
+        value={email}
         placeholder="Password"
-        value={password}
         onChangeText={setPassword}
+        onSubmitEditing={() => passwordInputRef.current?.focus()}
         secureTextEntry
-        style={{
-          height: 50,
-          borderColor: 'gray',
-          borderWidth: 1,
-          width: 300,
-          textAlign: 'center',
-          margin: 5,
-          padding: 10
-        }}
       />
+
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
         <Button
           disabled={isSubmitButtonDisabled}
           onPress={loginUser}
-          variant="small"
+          variant="medium"
           title={t('commonTranslations.loginButton')}
         />
 

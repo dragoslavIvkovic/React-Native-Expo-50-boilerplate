@@ -1,5 +1,12 @@
 import React from 'react'
-import { TouchableOpacity, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  useWindowDimensions
+} from 'react-native'
 
 interface CustomButtonProps {
   title: string
@@ -18,11 +25,17 @@ const Button: React.FC<CustomButtonProps> = ({
   variant = 'medium',
   type = 'primary'
 }) => {
+  const { width } = useWindowDimensions()
+
+  // Izračunajte širinu dugmeta na osnovu varijante
+  const buttonWidth =
+    variant === 'small' ? width * 0.3 : variant === 'medium' ? width * 0.5 : width * 0.7
+
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        styles[variant],
+        { width: buttonWidth }, // Dinamički postavite širinu dugmeta
         styles[type],
         style,
         disabled && styles.disabledButton
@@ -37,22 +50,7 @@ const Button: React.FC<CustomButtonProps> = ({
   )
 }
 
-type StyleTypes = {
-  button: object
-  small: object
-  medium: object
-  large: object
-  primary: object
-  reset: object
-  secondary: object
-  cancel: object
-  buttonText: object
-  disabledButton: object
-  disabledButtonText: object
-  [key: string]: object
-}
-
-const styles: StyleTypes = StyleSheet.create({
+const styles = StyleSheet.create({
   button: {
     height: 42,
     borderRadius: 4,
@@ -62,15 +60,7 @@ const styles: StyleTypes = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5
   },
-  small: {
-    width: 280
-  },
-  medium: {
-    width: 300
-  },
-  large: {
-    width: 320
-  },
+  // Obratite pažnju da smo uklonili specifične stilove za small, medium i large širine
   primary: {
     backgroundColor: '#2196F3'
   },
@@ -92,6 +82,18 @@ const styles: StyleTypes = StyleSheet.create({
     fontWeight: 'bold',
     textTransform: 'uppercase'
   },
+  primaryText: {
+    // Dodajte ovaj stil ukoliko koristite u komponenti
+    color: 'white'
+  },
+  resetText: {
+    // Dodajte ovaj stil ukoliko koristite u komponenti
+    color: 'white'
+  },
+  secondaryText: {
+    // Dodajte ovaj stil ukoliko koristite u komponenti
+    color: 'green'
+  },
   cancelText: {
     color: 'black'
   },
@@ -99,7 +101,7 @@ const styles: StyleTypes = StyleSheet.create({
     backgroundColor: '#e0e0e0'
   },
   disabledButtonText: {
-    color: 'white'
+    color: '#a0a0a0'
   }
 })
 

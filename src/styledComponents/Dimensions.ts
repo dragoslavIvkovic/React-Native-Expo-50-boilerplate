@@ -5,7 +5,7 @@ interface AdaptiveStyle {
   containerPadding: number
   margin: number
   fontSize: number
-  // Dodaj bilo koje druge dimenzije koje ti trebaju
+  inputWidth: number
 }
 
 export const useAdaptiveDimensions = (): AdaptiveStyle => {
@@ -15,11 +15,11 @@ export const useAdaptiveDimensions = (): AdaptiveStyle => {
   const containerPadding = width * 0.05 // 5% od širine ekrana
   const margin = width * 0.03 // 3% od širine ekrana
   const fontSize = width < 360 ? 14 : 16 // Manja veličina fonta za manje ekrane
-
+  const inputWidth = width * 0.5
   return {
     containerPadding,
     margin,
-    fontSize
-    // Definiši bilo koje dodatne dimenzije ovde
+    fontSize,
+    inputWidth
   }
 }
