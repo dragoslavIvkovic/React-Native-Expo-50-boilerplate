@@ -1,5 +1,5 @@
 import React from 'react'
-import { useThemeContext } from 'src/theme/ThemeProvider'
+import { useThemeContext } from 'src/context/ThemeProvider'
 import { FontAwesome as Icon } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native'
 

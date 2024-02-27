@@ -5,7 +5,7 @@ type UserState = {
   firstName: string
   lastName: string
   token: string
-  refreshToken: string // Add refreshToken
+  refreshToken: string
   login: (
     firstName: string,
     lastName: string,
@@ -22,10 +22,10 @@ export const useUserStore = create<UserState>(set => ({
   firstName: '',
   lastName: '',
   token: '',
-  refreshToken: '', // Add refreshToken
+  refreshToken: '',
   userPermissions: [],
   login: (firstName, lastName, userPermissions, token, refreshToken) =>
-    set({ isLogged: true, firstName, lastName, userPermissions, token, refreshToken }), // Include refreshToken in the set
+    set({ isLogged: true, firstName, lastName, userPermissions, token, refreshToken }),
   logout: () =>
     set({
       isLogged: false,
@@ -33,6 +33,6 @@ export const useUserStore = create<UserState>(set => ({
       lastName: '',
       userPermissions: [],
       token: '',
-      refreshToken: '' // Reset refreshToken on logout
+      refreshToken: ''
     })
 }))

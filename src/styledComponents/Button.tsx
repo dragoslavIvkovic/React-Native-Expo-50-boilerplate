@@ -7,7 +7,7 @@ import {
   ViewStyle,
   useWindowDimensions
 } from 'react-native'
-import { useThemeContext } from 'src/theme/ThemeProvider' // Ažurirajte putanju prema vašoj strukturi projekta
+import { useThemeContext } from 'src/context/ThemeProvider' // Ažurirajte putanju prema vašoj strukturi projekta
 
 interface CustomButtonProps {
   title: string
