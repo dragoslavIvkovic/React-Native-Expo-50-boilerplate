@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ketering.app",
-    "slug": "ketering",
+    "name": "your app",
+    "slug": "yourapp",
     "privacy": "unlisted",
     "version": "1.0.0",
     "platforms": [
