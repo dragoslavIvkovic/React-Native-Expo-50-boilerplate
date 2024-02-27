@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Alert, KeyboardAvoidingView, TextInput, View, useColorScheme } from 'react-native'
+import { KeyboardAvoidingView, TextInput, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useUserStore } from '@store/UserState'
 import { handleAxiosError } from 'src/errorHandler/handleAxiosError'
@@ -68,10 +68,9 @@ const LoginScreen: React.FC = () => {
       />
       <TextInputComponent
         ref={passwordInputRef}
-        value={email}
+        value={password}
         placeholder="Password"
         onChangeText={setPassword}
-        onSubmitEditing={() => passwordInputRef.current?.focus()}
         secureTextEntry
       />
 

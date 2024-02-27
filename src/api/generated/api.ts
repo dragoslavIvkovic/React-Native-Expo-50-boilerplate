@@ -9015,7 +9015,7 @@ export const AddressInternalApiFactory = function (configuration?: Configuration
         addressAdminControllerCreate(addressDto: AddressDto, options?: any): AxiosPromise<GenericAddressAdminResponse> {
             return localVarFp.addressAdminControllerCreate(addressDto, options).then((request) => request(axios, basePath));
         },
-        /**
+        /**a
          * Delete address by id
          * @summary Delete address by id
          * @param {string} id 

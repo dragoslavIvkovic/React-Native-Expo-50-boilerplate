@@ -1,21 +1,23 @@
-// Import React and necessary hooks
 import React from 'react'
-import Button from 'src/styledComponents/Button'
 import { useThemeContext } from 'src/theme/ThemeProvider'
-// Import the useThemeContext hook
+import { FontAwesome as Icon } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native'
 
-// Define a new component, e.g., ThemeToggleButton
 const ThemeToggleButton = () => {
-  // Use the toggleTheme function from the theme context
-  const { toggleTheme } = useThemeContext()
+  const { isDarkTheme, toggleTheme } = useThemeContext()
 
-  // Return the Button component with your props
+  console.log('isDarkTheme', isDarkTheme)
+
+  const iconColor = isDarkTheme ? 'white' : 'black'
+
   return (
-    <Button
-      onPress={toggleTheme}
-      variant="medium"
-      title="Change Theme" // Assuming you handle translations elsewhere or hardcoding for simplicity
-    />
+    <TouchableOpacity onPress={toggleTheme}>
+      {isDarkTheme ? (
+        <Icon name="toggle-on" size={24} color={iconColor} />
+      ) : (
+        <Icon name="toggle-off" size={24} color={iconColor} />
+      )}
+    </TouchableOpacity>
   )
 }
 

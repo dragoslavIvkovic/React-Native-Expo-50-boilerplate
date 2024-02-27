@@ -7,6 +7,7 @@ import {
   ViewStyle,
   useWindowDimensions
 } from 'react-native'
+import { useThemeContext } from 'src/theme/ThemeProvider' // Ažurirajte putanju prema vašoj strukturi projekta
 
 interface CustomButtonProps {
   title: string
@@ -14,7 +15,6 @@ interface CustomButtonProps {
   style?: StyleProp<ViewStyle>
   disabled?: boolean
   variant?: 'small' | 'medium' | 'large'
-  type?: 'reset' | 'primary' | 'secondary' | 'cancel'
 }
 
 const Button: React.FC<CustomButtonProps> = ({
@@ -22,12 +22,11 @@ const Button: React.FC<CustomButtonProps> = ({
   onPress,
   style,
   disabled = false,
-  variant = 'medium',
-  type = 'primary'
+  variant = 'medium'
 }) => {
   const { width } = useWindowDimensions()
+  const { isDarkTheme } = useThemeContext() // Koristi kontekst teme
 
-  // Izračunajte širinu dugmeta na osnovu varijante
   const buttonWidth =
     variant === 'small' ? width * 0.3 : variant === 'medium' ? width * 0.5 : width * 0.7
 
@@ -35,15 +34,19 @@ const Button: React.FC<CustomButtonProps> = ({
     <TouchableOpacity
       style={[
         styles.button,
-        { width: buttonWidth }, // Dinamički postavite širinu dugmeta
-        styles[type],
+        { width: buttonWidth },
+        isDarkTheme ? styles.darkButton : styles.lightButton,
         style,
         disabled && styles.disabledButton
       ]}
       onPress={onPress}
       disabled={disabled}>
       <Text
-        style={[styles.buttonText, styles[type + 'Text'], disabled && styles.disabledButtonText]}>
+        style={[
+          styles.buttonText,
+          isDarkTheme ? styles.darkButtonText : styles.lightButtonText,
+          disabled && styles.disabledButtonText
+        ]}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -53,52 +56,34 @@ const Button: React.FC<CustomButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     height: 42,
-    borderRadius: 4,
-    paddingVertical: 8,
-    paddingHorizontal: 22,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5
   },
-  // Obratite pažnju da smo uklonili specifične stilove za small, medium i large širine
-  primary: {
-    backgroundColor: '#2196F3'
+  lightButton: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#2196F3',
+    borderWidth: 2
   },
-  reset: {
-    backgroundColor: 'red'
-  },
-  secondary: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'green'
-  },
-  cancel: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'black'
+  darkButton: {
+    backgroundColor: '#333333',
+    borderColor: '#BB86FC',
+    borderWidth: 2
   },
   buttonText: {
-    color: 'white',
     fontWeight: 'bold',
     textTransform: 'uppercase'
   },
-  primaryText: {
-    // Dodajte ovaj stil ukoliko koristite u komponenti
-    color: 'white'
+  lightButtonText: {
+    color: '#2196F3'
   },
-  resetText: {
-    // Dodajte ovaj stil ukoliko koristite u komponenti
-    color: 'white'
-  },
-  secondaryText: {
-    // Dodajte ovaj stil ukoliko koristite u komponenti
-    color: 'green'
-  },
-  cancelText: {
-    color: 'black'
+  darkButtonText: {
+    color: '#BB86FC'
   },
   disabledButton: {
-    backgroundColor: '#e0e0e0'
+    backgroundColor: '#e0e0e0',
+    borderColor: '#aaaaaa'
   },
   disabledButtonText: {
     color: '#a0a0a0'

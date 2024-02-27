@@ -11,7 +11,7 @@ import { RootStackParamList } from 'src/navigation/RootStackParamList'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const AppContent = () => {
-  const { isDarkTheme } = useThemeContext() // Ovo treba premestiti unutar komponente koja će koristiti kontekst
+  const { isDarkTheme } = useThemeContext()
 
   return (
     <NavigationContainer theme={isDarkTheme ? CustomDarkTheme : CustomLightTheme}>

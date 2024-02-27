@@ -5,7 +5,7 @@ import { useColorScheme } from 'react-native'
 const ThemeContext = createContext({
   isDarkTheme: false,
   toggleTheme: () => {},
-  setManualTheme: (isDark: boolean) => {}
+  setManualTheme: () => {}
 })
 
 export const useThemeContext = () => useContext(ThemeContext)
@@ -16,6 +16,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const systemTheme = useColorScheme() // 'light' ili 'dark'
   const [isDarkTheme, setIsDarkTheme] = useState(systemTheme === 'dark')
   const [manualTheme, setManualTheme] = useState<boolean | null>(null)
+
+  console.log('manualTheme', systemTheme, isDarkTheme)
 
   useEffect(() => {
     // Učitavanje korisnikove preferencije teme pri pokretanju
@@ -30,7 +32,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       }
     }
 
-    loadTheme()
+    void loadTheme()
   }, [systemTheme])
 
   const toggleTheme = async () => {
@@ -42,12 +44,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Ako korisnik nije ručno promenio temu, pratimo sistemsku temu
-  useEffect(() => {
-    if (manualTheme === null) {
-      setIsDarkTheme(systemTheme === 'dark')
-    }
-  }, [systemTheme, manualTheme])
-
   return (
     <ThemeContext.Provider value={{ isDarkTheme, toggleTheme, setManualTheme }}>
       {children}
