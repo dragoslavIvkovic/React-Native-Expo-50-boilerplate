@@ -16,7 +16,7 @@
     "lint": "eslint src/ --fix --max-warnings=0",
     "format": "prettier 'src/**/*.{js,jsx,ts,tsx}' --write",
     "prepare": "husky install",
-    "generate:apis": "npx openapi-generator-cli generate -i https://ketering-be-dev.stryna.tech/open-api-json -g typescript-axios -o generated --output ./src/api/generated --skip-validate-spec"
+    "generate:apis": "npx openapi-generator-cli generate -i url.swager.json -g typescript-axios -o generated --output ./src/api/generated --skip-validate-spec"
   },
   "dependencies": {
     "@expo/config": "~8.5.0",
