@@ -18,8 +18,8 @@ console.log('BASE_PATH_URL api interface', BASE_PATH_URL)
 const authApi = new AuthApi(config, BASE_PATH_URL, axiosInstance)
 
 axiosInstance.interceptors.request.use((config) => {
-  
-  if (!config.url.endsWith('/api/v1/auth/login')) {
+  // Check if config.url is defined to satisfy TypeScript's type checking
+  if (config.url && !config.url.endsWith('/api/v1/auth/login')) {
     const token = useUserStore.getState().token;
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
@@ -27,6 +27,7 @@ axiosInstance.interceptors.request.use((config) => {
   }
   return config;
 });
+
 
  
 
