@@ -9,12 +9,10 @@ import HeaderLocalization from '@components/Header/HeaderLocalization'
 import { useTranslation } from 'react-i18next'
 import Button from 'src/styledComponents/Button'
 import TextInputComponent from 'src/styledComponents/TextInput'
-import ThemeToggleButton from '@components/ThemeToggleButton'
 
 const LoginScreen: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation()
-  const { toggleTheme } = useThemeContext()
   const [email, setEmail] = useState<string>('test@ketering.app')
   const [password, setPassword] = useState<string>('Password123')
   const [rememberMe, setRememberMe] = useState<boolean>(true)
@@ -33,17 +31,13 @@ const LoginScreen: React.FC = () => {
       const response = await authApi.authControllerLogin(loginPayload, 'mobile')
       const { accessToken, refreshToken, userId, userRoles } = response.data.data
 
-      // Update Zustand store
       login('FirstNamePlaceholder', 'LastNamePlaceholder', userRoles, accessToken, refreshToken)
 
-      // Log user roles
       console.log('Login response', userRoles)
 
-      // Directly navigate based on the userRoles from the response
       if (userRoles.includes('CLIENT')) {
         navigation.navigate('ClientHomeScreen')
       }
-      // Add more conditions as needed based on userRoles
     } catch (error) {
       handleAxiosError(error)
     }
@@ -57,8 +51,6 @@ const LoginScreen: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-      <HeaderLocalization />
-      <ThemeToggleButton />
       <TextInputComponent
         autoFocus={true}
         value={email}

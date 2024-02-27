@@ -7,6 +7,8 @@ import LoginScreen from '@screens/auth/LoginScreen'
 import { CustomDarkTheme, CustomLightTheme } from 'src/theme/theme'
 import { ThemeProvider, useThemeContext } from 'src/theme/ThemeProvider'
 import { RootStackParamList } from 'src/navigation/RootStackParamList'
+import ThemeToggleButton from '@components/ThemeToggleButton'
+import HeaderLocalization from '@components/Header/HeaderLocalization'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -21,7 +23,14 @@ const AppContent = () => {
           title: '',
           headerTitleAlign: 'center'
         }}>
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            headerRight: () => <ThemeToggleButton />,
+            headerLeft: () => <HeaderLocalization />
+          }}
+        />
         <Stack.Screen name="ClientHomeScreen" component={ClientHomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
