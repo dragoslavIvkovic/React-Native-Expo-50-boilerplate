@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef } from 'react'
-import { KeyboardAvoidingView, TextInput, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, TextInput, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useUserStore } from '@store/UserState'
 import { handleAxiosError } from 'src/errorHandler/handleAxiosError'
@@ -9,6 +9,12 @@ import { useTranslation } from 'react-i18next'
 import Button from 'src/styledComponents/Button'
 import TextInputComponent from 'src/styledComponents/TextInput'
 import { RootStackParamList } from 'src/navigation/RootStackParamList'
+import { z } from 'zod'
+
+const loginSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+  password: z.string().min(8, { message: 'Password must be at least 8 characters long' })
+})
 
 const LoginScreen: React.FC = () => {
   const { t } = useTranslation()
@@ -22,6 +28,18 @@ const LoginScreen: React.FC = () => {
 
   const loginUser = async () => {
     try {
+      const validationResult = loginSchema.safeParse({
+        email: email,
+        password: password
+      })
+
+      if (!validationResult.success) {
+        const errorMessages = validationResult.error.issues.map(issue => issue.message).join('\n')
+
+        Alert.alert('Validation Error', errorMessages)
+        return
+      }
+
       const loginPayload = {
         email: email,
         password: password,
