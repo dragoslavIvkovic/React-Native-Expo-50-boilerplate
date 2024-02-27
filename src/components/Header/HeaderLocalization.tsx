@@ -1,36 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { getLocales } from 'expo-localization'
 import { Picker } from '@react-native-picker/picker'
 import { useLanguageStore } from '@store/LocalizationStore'
-import i18n from '@components/localisation/i18n'
+import { useThemeContext } from 'src/context/ThemeProvider'
 
 const HeaderLocalization: React.FC = () => {
+  const { isDarkTheme } = useThemeContext()
+  const iconColor = isDarkTheme ? 'white' : 'black'
   const { language, setLanguage } = useLanguageStore()
-  const [selectedLanguage, setSelectedLanguage] = useState(language)
-  const supportedLanguages = ['en', 'sr'] // Definiše podržane jezike
 
-  useEffect(() => {
-    // Ovo se pokreće samo jednom na početku da postavi jezik na osnovu uređaja ili čuvanog jezika
-    const initializeLanguage = async () => {
-      const deviceLocale = getLocales()[0]?.languageCode || 'en'
-      const effectiveLocale = supportedLanguages.includes(deviceLocale) ? deviceLocale : 'en'
-      if (language !== effectiveLocale) {
-        await setLanguage(effectiveLocale)
-      }
+  const supportedLanguages = useMemo(() => ['en', 'sr', 'ru'], [])
+
+  const getInitialLanguage = () => {
+    const deviceLocale = getLocales()[0]?.languageCode || 'en'
+    return supportedLanguages.includes(deviceLocale) ? deviceLocale : 'en'
+  }
+
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    const initialLanguage = getInitialLanguage()
+    if (language !== initialLanguage) {
+      void setLanguage(initialLanguage)
     }
+    return initialLanguage
+  })
 
-    initializeLanguage()
-  }, [])
-
-  useEffect(() => {
-    // Osluškuje promene u `language` i ažurira lokalni state komponente
-    setSelectedLanguage(language)
-  }, [language])
-
-  const handleLanguageChange = async (lang: string) => {
-    await setLanguage(lang)
-    // Ne treba postavljati selectedLanguage ovde jer će to uraditi useEffect
+  const handleLanguageChange = (lang: string) => {
+    void setLanguage(lang)
+    setSelectedLanguage(lang)
   }
 
   return (
@@ -38,11 +35,22 @@ const HeaderLocalization: React.FC = () => {
       <Picker
         selectedValue={selectedLanguage}
         onValueChange={handleLanguageChange}
-        style={{ width: 200, height: 44 }} // Primer stilova za Picker
-      >
-        {supportedLanguages.map(lang => (
-          <Picker.Item key={lang} label={lang === 'en' ? 'English' : 'Српски'} value={lang} />
-        ))}
+        style={{ width: 200, height: 44, color: iconColor }}>
+        {supportedLanguages.map(lang => {
+          let label = lang
+          switch (lang) {
+            case 'en':
+              label = 'English'
+              break
+            case 'sr':
+              label = 'Српски'
+              break
+            case 'ru':
+              label = 'Русский'
+              break
+          }
+          return <Picker.Item key={lang} label={label} value={lang} />
+        })}
       </Picker>
     </View>
   )
@@ -50,7 +58,6 @@ const HeaderLocalization: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // Dodaj svoje stilove ovde
     justifyContent: 'center',
     alignItems: 'center'
   }

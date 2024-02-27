@@ -8,7 +8,8 @@ export const CustomDarkTheme = {
     text: '#fff',
     primary: '#bb86fc',
     card: '#121212',
-    border: '#272727'
+    border: '#272727',
+    placeholder: 'lightgrey'
   }
 }
 
@@ -20,6 +21,7 @@ export const CustomLightTheme = {
     text: '#000',
     primary: '#6200ee',
     card: '#f5f5f5',
-    border: '#c7c7c7'
+    border: '#c7c7c7',
+    placeholder: 'gray'
   }
 }

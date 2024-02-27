@@ -55,19 +55,18 @@ const TextInputComponent: ForwardRefRenderFunction<TextInput, TextInputComponent
 ) => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const { colors } = useTheme()
-  const { width } = useWindowDimensions() // Get window dimensions to adjust styles dynamically
+  const { width } = useWindowDimensions()
 
-  // Only adjust styles related to dimensions
   const adjustedStyles = StyleSheet.create({
     inputContainer: {
       ...styles.inputContainer,
-      // Example: Adjust container padding based on screen width
+
       paddingHorizontal: width * 0.05,
-      width: width * 0.7 // Adjusted width
+      width: width * 0.7
     },
     input: {
       ...styles.input,
-      height: inputHeight ?? 48, // Default height or use inputHeight if provided
+      height: inputHeight ?? 48,
       borderColor: isFocused ? colors.primary : error ? 'red' : '#ccc',
       color: colors.text,
       backgroundColor: colors.card
@@ -98,7 +97,7 @@ const TextInputComponent: ForwardRefRenderFunction<TextInput, TextInputComponent
           if (onBlur) onBlur()
         }}
         placeholder={placeholder}
-        placeholderTextColor={colors.placeholder}
+        placeholderTextColor={colors.text}
         onSubmitEditing={onSubmitEditing}
         keyboardType={keyboardType}
         autoFocus={autoFocus}
@@ -108,10 +107,8 @@ const TextInputComponent: ForwardRefRenderFunction<TextInput, TextInputComponent
   )
 }
 
-// Original styles remain mostly unchanged
 const styles = StyleSheet.create({
   inputContainer: {
-    // width: '100%',
     justifyContent: 'center',
     position: 'relative'
   },
@@ -120,7 +117,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 5,
     borderWidth: 1
-    // padding: 10
   },
   inputFocused: {},
   inputError: {},

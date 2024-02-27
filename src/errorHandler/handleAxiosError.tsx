@@ -3,38 +3,42 @@ import { TFunction } from 'i18next'
 import { Alert } from 'react-native'
 
 interface ErrorResponse {
-  status: number
-  detail: string
-  errors: string[]
+  code?: number
+  data?: {
+    detail?: string
+    errors?: string[]
+  }
   error?: string
 }
 
 export const handleAxiosError = (error: unknown, t: TFunction): void => {
-  const axiosError = error as AxiosError<ErrorResponse, unknown>
+  const axiosError = error as AxiosError<ErrorResponse>
 
-  if (axiosError.response && Array.isArray(axiosError.response.data.errors)) {
-    const statusERROR = axiosError.response.data.status
-
-    if (statusERROR === 500) {
-      const errorMessage500 = axiosError.response.data.detail
-      console.log('errorMessage500', errorMessage500)
-      Alert.alert(
-        t('commonTranslations.axiosErrorTitle'),
-        t('commonTranslations.axiosErrorPrefix') + errorMessage500
-      )
-    } else {
-      const errorMessage400 = axiosError.response.data.errors.join('\n')
-      console.log('errorMessage400', errorMessage400)
-      Alert.alert(
-        t('commonTranslations.axiosErrorTitle'),
-        t('commonTranslations.axiosErrorPrefix') + errorMessage400
-      )
+  if (axiosError && axiosError.response) {
+    const responseData = axiosError.response.data
+    if (responseData.code && responseData.code >= 400) {
+      if (responseData.data?.errors && responseData.data.errors.length > 0) {
+        // Handle case with multiple error messages
+        const errorMessage = responseData.data.errors.join('\n')
+        Alert.alert(
+          t('commonTranslations.axiosErrorTitle'),
+          t('commonTranslations.axiosErrorPrefix') + errorMessage
+        )
+      } else if (responseData.data?.detail) {
+        // Handle case with a single detailed error message
+        Alert.alert(
+          t('commonTranslations.axiosErrorTitle'),
+          t('commonTranslations.axiosErrorPrefix') + responseData.data.detail
+        )
+      } else {
+        // Generic error handler if specific errors are not provided
+        const genericErrorMessage = responseData.error || t('commonTranslations.axiosErrorGeneric')
+        Alert.alert(t('commonTranslations.axiosErrorTitle'), genericErrorMessage)
+      }
     }
   } else {
-    // Type guard to ensure defaultError is a string
-    const defaultErrorMessage = axiosError.response?.data?.error
-    const defaultError =
-      typeof defaultErrorMessage === 'string' ? defaultErrorMessage : t('unknownError')
-    Alert.alert(defaultError)
+    // Fallback error handler for cases where response structure is unexpected or not present
+    const fallbackErrorMessage = t('commonTranslations.axiosErrorFallback')
+    Alert.alert(t('commonTranslations.axiosErrorTitle'), fallbackErrorMessage)
   }
 }

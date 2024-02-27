@@ -1,0 +1,9 @@
+{
+"commonTranslations": {
+ "loginButton": "Войти", 
+"changeTheme": "Сменить тему",
+ "axiosErrorTitle": "Ошибка",
+ "axiosErrorPrefix": "Детали ошибки: ",
+ "axiosErrorFallback": "Произошла неизвестная ошибка" 
+}
+}

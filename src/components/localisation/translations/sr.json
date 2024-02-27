@@ -1,6 +1,9 @@
 {
   "commonTranslations": {
     "loginButton": "Пријави се",
-    "changeTheme": "Промени тему"
+    "changeTheme": "Промени тему",
+     "axiosErrorTitle": "Нешто си зајебао",
+    "axiosErrorPrefix": "Детаљи грешкеЧ ",
+    "axiosErrorFallback": "Непозната грешка"
   }
 }

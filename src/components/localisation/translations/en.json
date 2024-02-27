@@ -1,6 +1,9 @@
 {
   "commonTranslations": {
     "loginButton": "Login",
-    "changeTheme": "Change theme"
+    "changeTheme": "Change theme",
+    "axiosErrorTitle": "Error",
+    "axiosErrorPrefix": "Error details: ",
+    "axiosErrorFallback": "Uknown error occured"
   }
 }
