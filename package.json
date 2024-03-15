@@ -11,12 +11,10 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios",
     "test": "jest --passWithNoTests",
     "lint": "eslint src/ --fix --max-warnings=0",
     "format": "prettier 'src/**/*.{js,jsx,ts,tsx}' --write",
-    "prepare": "husky install",
-    "generate:apis": "npx openapi-generator-cli generate -i https://ketering-be-dev.stryna.tech/open-api-json -g typescript-axios -o generated --output ./src/api/generated --skip-validate-spec"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@expo/config": "~8.5.0",
@@ -28,12 +26,15 @@
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "@react-navigation/stack": "^6.3.18",
+    "@supabase/supabase-js": "^2.39.8",
     "axios": "^1.6.7",
     "babel-plugin-module-resolver": "^5.0.0",
     "babel-runtime": "^6.26.0",
     "expo": "^50",
     "expo-build-properties": "~0.11.1",
+    "expo-constants": "^15.4.5",
     "expo-dev-client": "~3.3.8",
+    "expo-linking": "^6.2.2",
     "expo-localization": "~14.8.3",
     "expo-status-bar": "~1.11.1",
     "expo-updates": "~0.24.11",
@@ -63,6 +64,7 @@
     "@types/react-native-vector-icons": "^6.4.15",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
+    "babel-plugin-inline-dotenv": "^1.7.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

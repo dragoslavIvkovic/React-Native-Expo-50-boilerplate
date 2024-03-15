@@ -1,14 +1,10 @@
 {
   "expo": {
-    "name": "ketering.app",
-    "slug": "ketering",
+    "name": "petgard.app",
+    "slug": "petguard",
     "privacy": "unlisted",
     "version": "1.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["android"],
     "orientation": "portrait",
     "icon": "./assets/android/drawable-hdpi/logo.png",
     "userInterfaceStyle": "automatic",
@@ -17,30 +13,21 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app uses your location to improve the user experience.",
-        "NSLocationAlwaysUsageDescription": "This app uses your location to provide extended features."
-      }
-    },
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/android/drawable-mdpi/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.stryna.keteringapp",
+      "package": "com.pet.garrd",
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "web": {
-      "favicon": "./assets/android/drawable-mdpi/logo.pnga"
+      "favicon": "./assets/android/drawable-mdpi/logo.png"
     },
     "extra": {
       "eas": {
-        "projectId": "4d9214cf-4e4b-44b0-945f-5724e7b6c94c"
+        "projectId": "96baa8f7-42a2-48ef-9027-3b505ff31590"
       }
     },
     "updates": {
@@ -49,18 +36,15 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "plugins": [
-      "expo-build-properties",
-      "expo-localization"
-    ]
+    "plugins": ["expo-build-properties", "expo-localization"],
+    "owner": "xmilioner",
+    "scheme": "com.pet.garrd"
   },
   "cli": {
     "version": ">= 3.5.2",
     "requireCommit": false
   },
-  "build": {
-    
-  },
+  "build": {},
   "submit": {
     "production": {}
   }
