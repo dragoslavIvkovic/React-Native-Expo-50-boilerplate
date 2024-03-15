@@ -10,10 +10,10 @@
       "web"
     ],
     "orientation": "portrait",
-    "icon": "./assets/images/logo-lg.png",
+    "icon": "./assets/android/drawable-hdpi/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/android/drawable-xxxhdpi/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -29,14 +29,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-sm.png",
+        "foregroundImage": "./assets/android/drawable-mdpi/logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.stryna.keteringapp",
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "web": {
-      "favicon": "./assets/images/logo-sm.png"
+      "favicon": "./assets/android/drawable-mdpi/logo.pnga"
     },
     "extra": {
       "eas": {

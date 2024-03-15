@@ -4,7 +4,7 @@ import { Alert, KeyboardAvoidingView, TextInput, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useUserStore } from '@store/UserState'
 import { handleAxiosError } from 'src/errorHandler/handleAxiosError'
-import { authApi } from 'src/api/generated/api-interface'
+ 
 import { useTranslation } from 'react-i18next'
 import Button from 'src/styledComponents/Button'
 import TextInputComponent from 'src/styledComponents/TextInput'
