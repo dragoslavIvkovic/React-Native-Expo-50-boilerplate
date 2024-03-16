@@ -6,24 +6,24 @@
     "version": "1.0.0",
     "platforms": ["android"],
     "orientation": "portrait",
-    "icon": "./assets/android/drawable-hdpi/logo.png",
+    "icon": "./assets/android/drawable-xxxhdpi/logo.png.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/android/drawable-xxxhdpi/logo.png",
+      "image":"./assets/android/drawable-xxxhdpi/logo.png.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/android/drawable-mdpi/logo.png",
+        "foregroundImage": "./assets/android/drawable-xxxhdpi/logo.png.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.pet.garrd",
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "web": {
-      "favicon": "./assets/android/drawable-mdpi/logo.png"
+      "favicon": "./assets/android/drawable-xxxhdpi/logo.png.png"
     },
     "extra": {
       "eas": {

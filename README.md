@@ -94,7 +94,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 ... and so on for every frequently asked question.
 
  
-
+ adb shell am start -W -a android.intent.action.VIEW -d "com.pet.garrd://create-profile" com.pet.garrd
 
  
 © 2024 Dragoslav Ivkovic. All rights reserved.

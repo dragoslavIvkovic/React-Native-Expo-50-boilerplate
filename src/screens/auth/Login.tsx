@@ -32,7 +32,7 @@ const Login = () => {
         setErrorMsg(error.message)
       } else {
         // Navigate to another screen upon successful login
-        navigation.navigate('ClientHomeScreen') // Adjust 'HomeScreen' to your actual home screen route name
+        navigation.navigate('Home') // Adjust 'HomeScreen' to your actual home screen route name
       }
     } catch (error) {
       setErrorMsg('Failed to log in. Email or Password Incorrect.')

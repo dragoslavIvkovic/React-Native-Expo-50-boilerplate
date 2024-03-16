@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 
-const ClientHomeScreen: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome to the Client Home Screen!</Text>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ClientHomeScreen
+export default Home
