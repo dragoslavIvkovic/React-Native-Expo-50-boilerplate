@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -11,17 +11,14 @@ import { useNavigation } from '@react-navigation/native'
 import { useAuth } from 'src/provider/AuthProvider'
 
 const Login = () => {
-  const emailRef = useRef(null)
-  const passwordRef = useRef(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
   const { login } = useAuth()
 
   const handleSubmit = async () => {
-    const email = emailRef.current?.value
-    const password = passwordRef.current?.value
-
     if (!email || !password) {
       setErrorMsg('Please fill in the fields')
       return
@@ -35,7 +32,7 @@ const Login = () => {
         setErrorMsg(error.message)
       } else {
         // Navigate to another screen upon successful login
-        navigation.navigate('HomeScreen') // Adjust 'HomeScreen' to your actual home screen route name
+        navigation.navigate('ClientHomeScreen') // Adjust 'HomeScreen' to your actual home screen route name
       }
     } catch (error) {
       setErrorMsg('Failed to log in. Email or Password Incorrect.')
@@ -49,17 +46,19 @@ const Login = () => {
       <Text style={styles.title}>Login to your account</Text>
       {errorMsg ? <Text style={styles.error}>{errorMsg}</Text> : null}
       <TextInput
-        ref={emailRef}
         style={styles.input}
         placeholder="Email address"
         keyboardType="email-address"
         autoCapitalize="none"
+        onChangeText={setEmail} // Update the email state on change
+        value={email} // Bind the email state to the input value
       />
       <TextInput
-        ref={passwordRef}
         style={styles.input}
         placeholder="Password"
         secureTextEntry={true}
+        onChangeText={setPassword} // Update the password state on change
+        value={password} // Bind the password state to the input value
       />
       <TouchableOpacity onPress={handleSubmit} style={styles.button} disabled={loading}>
         {loading ? (
