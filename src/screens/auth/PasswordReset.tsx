@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { useAuth } from 'src/provider/AuthProvider'
- 
 
 const PasswordReset = () => {
   const { passwordReset } = useAuth()
@@ -16,6 +15,7 @@ const PasswordReset = () => {
       console.log(error)
       console.log(data)
       setMsg('Password reset has been sent to your email')
+
       Alert.alert('Success', 'Password reset email has been sent.')
     } catch (e) {
       console.log(e)

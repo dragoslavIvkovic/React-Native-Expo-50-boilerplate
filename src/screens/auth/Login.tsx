@@ -9,13 +9,17 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useAuth } from 'src/provider/AuthProvider'
+import { RootStackParamList } from 'src/navigation/RootStackParamList'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 const Login = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigation = useNavigation()
+
   const { login } = useAuth()
 
   const handleSubmit = async () => {

@@ -1,4 +1,8 @@
+// Definicija tipova za vašu navigacionu strukturu
 export type RootStackParamList = {
-  LoginScreen: undefined
+  Login: undefined
   Home: undefined
+  Register: undefined
+  PasswordReset: undefined
+  ProfileSettings: undefined
 }

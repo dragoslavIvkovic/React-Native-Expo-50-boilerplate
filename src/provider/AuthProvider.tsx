@@ -1,22 +1,19 @@
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react'
-import { supabase } from 'src/initSupabase';
- 
+import { supabase } from 'src/initSupabase'
 
 type User = {
-  manager_id(
-    arg0: string,
-    manager_id: any
-  ): { data: any; error: any } | PromiseLike<{ data: any; error: any }>
-  // Definicija vašeg User tipa
+  id: string
+  email: string
+  // Include other relevant user properties here
 }
 
 type AuthContextType = {
   auth: boolean
   user: User | null
-  login: (email: string, password: string) => Promise<void>
-  signOut: () => Promise<void>
-  passwordReset: (email: string) => Promise<void>
-  updatePassword: (updatedPassword: string) => Promise<void>
+  login: (email: string, password: string) => Promise<{ error?: Error }>
+  signOut: () => Promise<{ error?: Error }>
+  passwordReset: (email: string) => Promise<{ error?: Error }>
+  updatePassword: (updatedPassword: string) => Promise<{ error?: Error }>
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
@@ -24,6 +21,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+ 
   const [auth, setAuth] = useState<boolean>(false)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -31,10 +29,17 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const init = async () => {
       setLoading(true)
-      const { data: sessionData } = await supabase.auth.getSession()
+      const { data: sessionData, error } = await supabase.auth.getSession()
 
-      if (sessionData.session) {
-        setUser(sessionData.session.user)
+      if (error) {
+        console.error('Error getting current session:', error.message)
+        setLoading(false)
+        return
+      }
+
+      if (sessionData.session && sessionData.session.user) {
+        // Assuming Supabase's user object matches your User type
+        setUser(sessionData.session.user as User) // Cast if you're confident in the shape or map properties as needed
         setAuth(true)
       } else {
         setUser(null)
@@ -43,11 +48,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false)
     }
 
-    init()
+    void init()
 
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session) {
-        setUser(session.user)
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session && session.user) {
+        setUser(session.user as User) // Similarly, cast or map the user object
         setAuth(true)
       } else {
         setUser(null)
@@ -68,10 +73,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) throw error
   }
 
-  const passwordReset = (email: string) =>
-    supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:5173/update-password'
-    })
+  const passwordReset = async (email: string) => {
+    try {
+      await supabase.auth.resetPasswordForEmail(email)
+      // Ovde pretpostavljamo da imate navigation objekat dostupan ili ga prosleđujete kao prop.
+    } catch (error) {
+      console.error('Error sending password reset email:', error.message)
+    }
+  }
 
   const updatePassword = (updatedPassword: string) =>
     supabase.auth.updateUser({ password: updatedPassword })
