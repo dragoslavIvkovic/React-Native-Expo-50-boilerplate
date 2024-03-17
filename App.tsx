@@ -1,3 +1,4 @@
+import 'intl-pluralrules'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -14,7 +15,6 @@ import Register from '@screens/auth/Register'
 import PasswordReset from '@screens/auth/PasswordReset'
 import { Ionicons as Icon } from '@expo/vector-icons'
 import CreateProfile from '@screens/CreateProfile'
-import 'intl-pluralrules'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -35,6 +35,7 @@ function AuthStack() {
           headerLeft: () => <HeaderLocalization />
         }}
       />
+      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="PasswordReset" component={PasswordReset} />
       <Stack.Screen name="CreateProfile" component={CreateProfile} />
@@ -54,16 +55,12 @@ function MainTabNavigator() {
           } else if (route.name === 'ProfileSettings') {
             iconName = focused ? 'settings' : 'settings-outline'
           }
-
-          // Možete vratiti bilo koju komponentu koju želite da koristite kao ikonu,
-          // ali ovde koristimo Icon
           return <Icon name={iconName} size={size} color={color} />
-        }
-      })}
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray'
-      }}>
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: [{ display: 'flex' }, null]
+      })}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="ProfileSettings" component={ProfileSettings} />
     </Tab.Navigator>
@@ -75,7 +72,7 @@ const AppContent = () => {
   const { auth } = useAuth()
 
   const linking = {
-    prefixes: ['com.pet.garrd://'], // Ensure this prefix matches your app's URL scheme
+    prefixes: ['com.pet.garrd://'],
     config: {
       screens: {
         Auth: {
@@ -89,7 +86,6 @@ const AppContent = () => {
         },
         Home: 'home',
         ProfileSettings: 'profile-settings'
-        // Add additional routes and screens as necessary
       }
     }
   }
