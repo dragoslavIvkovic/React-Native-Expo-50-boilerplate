@@ -1,5 +1,5 @@
 import 'intl-pluralrules'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -88,9 +88,33 @@ const linking = {
 const AppContent = () => {
   const { isDarkTheme } = useThemeContext()
   const { auth } = useAuth()
+  const navigationRef = useRef()
+
+  useEffect(() => {
+    const handleDeepLinkEvent = event => {
+      console.log('Deep link event url: ', event.url)
+      const parsedUrl = Linking.parse(event.url)
+      console.log('Parsed event URL:', parsedUrl)
+
+      if (parsedUrl.hostname === 'update-password' && !auth) {
+        console.log('Navigating to UpdatePassword from event')
+        navigationRef.current?.navigate('UpdatePassword')
+      }
+      // Dodajte ovde dodatnu logiku ako je potrebno
+    }
+
+    // Dodavanje event listenera, koji sada vraća funkciju za uklanjanje listenera
+    const unsubscribe = Linking.addEventListener('url', handleDeepLinkEvent)
+
+    // Funkcija za čišćenje koja se poziva kada komponenta bude demontirana
+    return () => unsubscribe()
+  }, [auth])
 
   return (
-    <NavigationContainer theme={isDarkTheme ? CustomDarkTheme : CustomLightTheme} linking={linking}>
+    <NavigationContainer
+      ref={navigationRef}
+      theme={isDarkTheme ? CustomDarkTheme : CustomLightTheme}
+      linking={linking}>
       {auth ? <MainTabNavigator /> : <AuthStack />}
     </NavigationContainer>
   )
