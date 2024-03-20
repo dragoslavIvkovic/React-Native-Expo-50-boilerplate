@@ -68,16 +68,10 @@ Start command
   **eas build --platform android**
 
 
-## generate api - openapi-generator:
-every time you want to update generated api files, you only need to enter the below command in the terminal:
+ 
 
 
-
-**npm run generate:apis**
-after this command in base.ts comment this line export const BASE_PATH
-in export class BaseAPI replace string = BASE_PATH with string = BASE_PATH_URL , import it from .env
-
-## Frequently Asked Questions (FAQ)
+ 
 
 -  
  
@@ -96,6 +90,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
  
  adb shell am start -W -a android.intent.action.VIEW -d "com.pet.garrd://create-profile" com.pet.garrd
 npx uri-scheme open com.pet.garrd://create-profile --android
+ adb shell am start -a android.intent.action.VIEW -d "com.pet.garrd://update-password"
 
  
 © 2024 Dragoslav Ivkovic. All rights reserved.
