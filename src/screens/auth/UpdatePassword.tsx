@@ -1,3 +1,4 @@
+// UpdatePassword.js
 import React, { useState } from 'react'
 import {
   View,
@@ -11,14 +12,14 @@ import { useNavigation } from '@react-navigation/native'
 import { useAuth } from 'src/provider/AuthProvider'
 
 const UpdatePassword = () => {
-  const { updatePassword } = useAuth()
+  const navigation = useNavigation()
+  const { updatePassword, accessToken } = useAuth()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const textOnSuccess = 'Password updated successfully'
-  const navigation = useNavigation()
+  console.log('accessToken UpdatePassword', accessToken)
 
   const handleSubmit = async () => {
     if (!password || !confirmPassword) {
@@ -29,28 +30,33 @@ const UpdatePassword = () => {
       setErrorMsg("Passwords don't match. Try again")
       return
     }
+    if (!accessToken) {
+      setErrorMsg('Access token is missing.')
+      return
+    }
 
     setLoading(true)
     try {
-      const { error } = await updatePassword(password)
+      const { error } = await updatePassword(accessToken, password)
       if (error) {
         setErrorMsg(error.message)
         setSuccess(false)
       } else {
         setSuccess(true)
-        navigation.navigate('Home') // Adjust according to your navigation setup
+        navigation.navigate('Login')
       }
     } catch (error) {
       setErrorMsg('Error in Updating Password. Please try again')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
     <View style={styles.container}>
       {errorMsg ? <Text style={styles.errorMsg}>{errorMsg}</Text> : null}
       {success ? (
-        <Text style={styles.successMsg}>{textOnSuccess}</Text>
+        <Text style={styles.successMsg}>Password updated successfully</Text>
       ) : (
         <>
           <Text style={styles.title}>Update Password</Text>

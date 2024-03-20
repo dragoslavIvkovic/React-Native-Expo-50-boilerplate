@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native'
 const ThemeToggleButton = () => {
   const { isDarkTheme, toggleTheme } = useThemeContext()
 
-  console.log('isDarkTheme', isDarkTheme)
+  // console.log('isDarkTheme', isDarkTheme)
 
   const iconColor = isDarkTheme ? 'white' : 'black'
 

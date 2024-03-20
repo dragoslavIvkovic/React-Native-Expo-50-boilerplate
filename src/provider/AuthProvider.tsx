@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react'
-import { supabase } from 'src/initSupabase'
+import { supabase } from 'src/initSupabase' // Osiguraj da je putanja ispravna
 
 type User = {
   id: string
   email: string
-  // Include other relevant user properties here
+  // Dodaj ostale relevantne osobine korisnika ovde
 }
 
 type AuthContextType = {
@@ -14,6 +14,8 @@ type AuthContextType = {
   signOut: () => Promise<{ error?: Error }>
   passwordReset: (email: string) => Promise<{ error?: Error }>
   updatePassword: (updatedPassword: string) => Promise<{ error?: Error }>
+  accessToken: string | null // Dodato
+  updateAccessToken: (newToken: string) => void // Dodato
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
@@ -24,6 +26,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState<boolean>(false)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
+  const [accessToken, setAccessToken] = useState<string | null>(null) // Dodato
 
   useEffect(() => {
     const init = async () => {
@@ -37,8 +40,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       if (sessionData.session && sessionData.session.user) {
-        // Assuming Supabase's user object matches your User type
-        setUser(sessionData.session.user as User) // Cast if you're confident in the shape or map properties as needed
+        setUser(sessionData.session.user as User)
         setAuth(true)
       } else {
         setUser(null)
@@ -51,7 +53,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session && session.user) {
-        setUser(session.user as User) // Similarly, cast or map the user object
+        setUser(session.user as User)
         setAuth(true)
       } else {
         setUser(null)
@@ -72,20 +74,25 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) throw error
   }
 
-  const passwordReset = async email => {
+  const passwordReset = async (email: string) => {
     try {
       const response = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: 'com.pet.garrd://update-password'
       })
-      // Handle response
+      // Obrada odgovora
     } catch (error) {
       console.error('Error sending password reset email:', error.message)
-      // Handle error
+      // Obrada greške
     }
   }
 
   const updatePassword = (updatedPassword: string) =>
     supabase.auth.updateUser({ password: updatedPassword })
+
+  // Dodata funkcija za ažuriranje access tokena
+  const updateAccessToken = (newToken: string) => {
+    setAccessToken(newToken)
+  }
 
   const authContextValue = useMemo(
     () => ({
@@ -94,9 +101,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       login,
       signOut,
       passwordReset,
-      updatePassword
+      updatePassword,
+      accessToken, // Dodato
+      updateAccessToken // Dodato
     }),
-    [auth, user]
+    [auth, user, accessToken]
   )
 
   return (

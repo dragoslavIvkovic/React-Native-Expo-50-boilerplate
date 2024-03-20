@@ -1,4 +1,3 @@
-import 'intl-pluralrules'
 import React, { useEffect, useRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -96,19 +95,28 @@ const AppContent = () => {
       const parsedUrl = Linking.parse(event.url)
       console.log('Parsed event URL:', parsedUrl)
 
+      // Extracting the access_token from the URL if present
+      const accessToken = parsedUrl.queryParams.access_token
+      if (accessToken) {
+        setAccessToken(accessToken) // Set access token using your context/state method
+        console.log('Access token is set:', accessToken)
+      }
+
       if (parsedUrl.hostname === 'update-password' && !auth) {
         console.log('Navigating to UpdatePassword from event')
         navigationRef.current?.navigate('UpdatePassword')
       }
-      // Dodajte ovde dodatnu logiku ako je potrebno
+      // Add additional logic here if necessary
     }
 
-    // Dodavanje event listenera, koji sada vraća funkciju za uklanjanje listenera
-    const unsubscribe = Linking.addEventListener('url', handleDeepLinkEvent)
+    // Adding the event listener
+    Linking.addEventListener('url', handleDeepLinkEvent)
 
-    // Funkcija za čišćenje koja se poziva kada komponenta bude demontirana
-    return () => unsubscribe()
-  }, [auth])
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      Linking.removeEventListener('url', handleDeepLinkEvent)
+    }
+  }, [auth]) // Ensure this effect runs whenever the auth state changes
 
   return (
     <NavigationContainer
@@ -128,4 +136,7 @@ export default function App() {
       </AuthProvider>
     </ThemeProvider>
   )
+}
+function setAccessToken(token: string) {
+  throw new Error('Function not implemented.')
 }
