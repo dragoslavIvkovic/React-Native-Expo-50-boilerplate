@@ -95,6 +95,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
  
  adb shell am start -W -a android.intent.action.VIEW -d "com.pet.garrd://create-profile" com.pet.garrd
+npx uri-scheme open com.pet.garrd://create-profile --android
 
  
 © 2024 Dragoslav Ivkovic. All rights reserved.

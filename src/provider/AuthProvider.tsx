@@ -21,7 +21,6 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
- 
   const [auth, setAuth] = useState<boolean>(false)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -73,12 +72,15 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) throw error
   }
 
-  const passwordReset = async (email: string) => {
+  const passwordReset = async email => {
     try {
-      await supabase.auth.resetPasswordForEmail(email)
-      // Ovde pretpostavljamo da imate navigation objekat dostupan ili ga prosleđujete kao prop.
+      const response = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'com.pet.garrd://update-password'
+      })
+      // Handle response
     } catch (error) {
       console.error('Error sending password reset email:', error.message)
+      // Handle error
     }
   }
 

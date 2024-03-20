@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -7,13 +7,13 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native' // Ako koristite React Navigation za navigaciju
+import { useNavigation } from '@react-navigation/native'
 import { useAuth } from 'src/provider/AuthProvider'
 
 const UpdatePassword = () => {
-  const { updatePassword } = useAuth() // Pretpostavlja se implementacija useAuth
-  const passwordRef = useRef()
-  const confirmPasswordRef = useRef()
+  const { updatePassword } = useAuth()
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -21,9 +21,6 @@ const UpdatePassword = () => {
   const navigation = useNavigation()
 
   const handleSubmit = async () => {
-    const password = passwordRef.current.value
-    const confirmPassword = confirmPasswordRef.current.value
-
     if (!password || !confirmPassword) {
       setErrorMsg('Please fill all the fields')
       return
@@ -60,13 +57,15 @@ const UpdatePassword = () => {
           <TextInput
             secureTextEntry
             placeholder="New Password"
-            ref={passwordRef}
+            onChangeText={setPassword}
+            value={password}
             style={styles.input}
           />
           <TextInput
             secureTextEntry
             placeholder="Confirm New Password"
-            ref={confirmPasswordRef}
+            onChangeText={setConfirmPassword}
+            value={confirmPassword}
             style={styles.input}
           />
           <TouchableOpacity onPress={handleSubmit} style={styles.button} disabled={loading}>

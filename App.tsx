@@ -1,5 +1,5 @@
 import 'intl-pluralrules'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -15,6 +15,8 @@ import Register from '@screens/auth/Register'
 import PasswordReset from '@screens/auth/PasswordReset'
 import { Ionicons as Icon } from '@expo/vector-icons'
 import CreateProfile from '@screens/CreateProfile'
+import * as Linking from 'expo-linking'
+import UpdatePassword from '@screens/auth/UpdatePassword'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -39,6 +41,7 @@ function AuthStack() {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="PasswordReset" component={PasswordReset} />
       <Stack.Screen name="CreateProfile" component={CreateProfile} />
+      <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
     </Stack.Navigator>
   )
 }
@@ -67,38 +70,28 @@ function MainTabNavigator() {
   )
 }
 
+const linking = {
+  prefixes: ['com.pet.garrd://', 'https://vgyoojanikcruxzcnilm.supabase.co'],
+  config: {
+    screens: {
+      Login: 'login',
+      Register: 'register',
+      PasswordReset: 'password-reset',
+      CreateProfile: 'create-profile',
+      UpdatePassword: 'update-password', // Direktno na root nivou
+      Home: 'home',
+      ProfileSettings: 'profile-settings'
+    }
+  }
+}
+
 const AppContent = () => {
   const { isDarkTheme } = useThemeContext()
   const { auth } = useAuth()
 
-  const linking = {
-    prefixes: ['com.pet.garrd://'],
-    config: {
-      screens: {
-        Auth: {
-          path: 'auth',
-          screens: {
-            Login: 'login',
-            Register: 'register',
-            PasswordReset: 'password-reset',
-            CreateProfile: 'create-profile'
-          }
-        },
-        Home: 'home',
-        ProfileSettings: 'profile-settings'
-      }
-    }
-  }
-
   return (
     <NavigationContainer theme={isDarkTheme ? CustomDarkTheme : CustomLightTheme} linking={linking}>
-      {auth ? (
-        // Ako je korisnik ulogovan, prikažite tab navigatore
-        <MainTabNavigator />
-      ) : (
-        // U suprotnom, koristite AuthStack za prikaz ekrana za autentifikaciju
-        <AuthStack />
-      )}
+      {auth ? <MainTabNavigator /> : <AuthStack />}
     </NavigationContainer>
   )
 }

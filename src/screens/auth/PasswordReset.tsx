@@ -1,50 +1,52 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
-import { useAuth } from 'src/provider/AuthProvider'
+import { useAuth } from 'src/provider/AuthProvider' // Ažurirajte putanju ako je potrebno
 
 const PasswordReset = () => {
   const { passwordReset } = useAuth()
-  const emailRef = useRef(null)
+  const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
-  const [msg, setMsg] = useState('')
 
   const handleSubmit = async () => {
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email address.')
+      return
+    }
+
     try {
       setLoading(true)
-      const { data, error } = await passwordReset(emailRef.current?.value || '')
-      console.log(error)
-      console.log(data)
-      setMsg('Password reset has been sent to your email')
-
+      const response = await passwordReset(email)
+      if (response && response.error) {
+        throw new Error(response.error.message)
+      }
       Alert.alert('Success', 'Password reset email has been sent.')
     } catch (e) {
-      console.log(e)
-      Alert.alert('Error', 'An error occurred while trying to reset the password.')
+      console.error(e)
+      Alert.alert('Error', e.message)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Password Reset</Text>
-      {msg ? (
-        <Text style={styles.message}>{msg}</Text>
-      ) : (
-        <View>
-          <TextInput
-            style={styles.input}
-            placeholder="Your email"
-            keyboardType="email-address"
-            ref={emailRef}
-            editable={!loading}
-          />
-          <TouchableOpacity onPress={handleSubmit} disabled={loading} style={styles.button}>
-            <Text style={styles.buttonText}>Send Reset Link</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      <TouchableOpacity style={styles.loginLink}>
+      <TextInput
+        style={styles.input}
+        placeholder="Your email"
+        keyboardType="email-address"
+        onChangeText={setEmail}
+        value={email}
+        editable={!loading}
+      />
+      <TouchableOpacity onPress={handleSubmit} disabled={loading} style={styles.button}>
+        <Text style={styles.buttonText}>Send Reset Link</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginLink}
+        onPress={() => {
+          /* Navigacija nazad na Login */
+        }}>
         <Text style={styles.loginText}>Back to Login?</Text>
       </TouchableOpacity>
     </View>
@@ -79,14 +81,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff'
-  },
-  message: {
-    padding: 15,
-    marginBottom: 20,
-    borderColor: '#4CAF50',
-    borderWidth: 1,
-    borderRadius: 5,
-    color: '#4CAF50'
   },
   loginLink: {
     marginTop: 15
