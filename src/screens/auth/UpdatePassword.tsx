@@ -42,6 +42,7 @@ const UpdatePassword = () => {
     try {
       const { error } = await updatePassword(token, password)
       if (error) {
+        console.log('errore', error)
         setErrorMsg(error.message)
         setSuccess(false)
       } else {

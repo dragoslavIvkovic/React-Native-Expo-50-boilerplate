@@ -91,24 +91,30 @@ const AppContent = () => {
 
   useEffect(() => {
     const handleDeepLinkEvent = event => {
-      const parsedUrl = Linking.parse(event.url)
-      console.log('Parsed event URL:', parsedUrl)
+      console.log('event.url:', event.url)
 
-      // Ako je očekivani token u queryParams
-      const token = 'ovo je token'
+      // Manually extracting the token from the hash fragment
+      let token
+      const hash = event.url.split('#')[1]
+      if (hash) {
+        const params = new URLSearchParams(hash)
+        token = params.get('access_token')
+      }
+
       if (token && !auth) {
         console.log('Token is:', token)
         navigationRef.current?.navigate('UpdatePassword', { token })
       }
     }
 
-    Linking.addEventListener('url', handleDeepLinkEvent)
+    // Assign the event listener to a variable
+    const eventListener = Linking.addEventListener('url', handleDeepLinkEvent)
 
+    // Use the variable for cleanup
     return () => {
-      urlListener.remove()
+      eventListener.remove()
     }
   }, [auth])
-  // Prazan niz zavisnosti znači da će se efekat pokrenuti samo jednom kada se komponenta montira
 
   return (
     <NavigationContainer
