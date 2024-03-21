@@ -8,20 +8,23 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { useAuth } from 'src/provider/AuthProvider'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 const UpdatePassword = () => {
   const navigation = useNavigation()
-  const { updatePassword, accessToken } = useAuth()
+  const route = useRoute() // Dodajte ovu liniju
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  console.log('accessToken UpdatePassword', accessToken)
+  const token = route.params?.token // Modifikovano da koristi `route.params`
+  console.log('token UpdatePassword', token)
 
   const handleSubmit = async () => {
+    // U UpdatePassword komponenti
+    const token = (route?.params as { token?: string })?.token
+    console.log('token', token)
     if (!password || !confirmPassword) {
       setErrorMsg('Please fill all the fields')
       return
@@ -30,14 +33,14 @@ const UpdatePassword = () => {
       setErrorMsg("Passwords don't match. Try again")
       return
     }
-    if (!accessToken) {
+    if (!token) {
       setErrorMsg('Access token is missing.')
       return
     }
 
     setLoading(true)
     try {
-      const { error } = await updatePassword(accessToken, password)
+      const { error } = await updatePassword(token, password)
       if (error) {
         setErrorMsg(error.message)
         setSuccess(false)

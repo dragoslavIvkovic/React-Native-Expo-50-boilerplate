@@ -91,32 +91,24 @@ const AppContent = () => {
 
   useEffect(() => {
     const handleDeepLinkEvent = event => {
-      console.log('Deep link event url: ', event.url)
       const parsedUrl = Linking.parse(event.url)
       console.log('Parsed event URL:', parsedUrl)
 
-      // Extracting the access_token from the URL if present
-      const accessToken = parsedUrl.queryParams.access_token
-      if (accessToken) {
-        setAccessToken(accessToken) // Set access token using your context/state method
-        console.log('Access token is set:', accessToken)
+      // Ako je očekivani token u queryParams
+      const token = 'ovo je token'
+      if (token && !auth) {
+        console.log('Token is:', token)
+        navigationRef.current?.navigate('UpdatePassword', { token })
       }
-
-      if (parsedUrl.hostname === 'update-password' && !auth) {
-        console.log('Navigating to UpdatePassword from event')
-        navigationRef.current?.navigate('UpdatePassword')
-      }
-      // Add additional logic here if necessary
     }
 
-    // Adding the event listener
     Linking.addEventListener('url', handleDeepLinkEvent)
 
-    // Cleanup function to remove the event listener when the component unmounts
     return () => {
-      Linking.removeEventListener('url', handleDeepLinkEvent)
+      urlListener.remove()
     }
-  }, [auth]) // Ensure this effect runs whenever the auth state changes
+  }, [auth])
+  // Prazan niz zavisnosti znači da će se efekat pokrenuti samo jednom kada se komponenta montira
 
   return (
     <NavigationContainer
@@ -136,7 +128,4 @@ export default function App() {
       </AuthProvider>
     </ThemeProvider>
   )
-}
-function setAccessToken(token: string) {
-  throw new Error('Function not implemented.')
 }
