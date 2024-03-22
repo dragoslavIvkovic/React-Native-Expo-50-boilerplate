@@ -1,3 +1,4 @@
+import 'intl-pluralrules'
 import React, { useEffect, useRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -20,7 +21,7 @@ import UpdatePassword from '@screens/auth/UpdatePassword'
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function AuthStack() {
+function AuthStack({ isAuthenticated }) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -28,19 +29,23 @@ function AuthStack() {
         title: '',
         headerTitleAlign: 'center'
       }}>
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{
-          headerRight: () => <ThemeToggleButton />,
-          headerLeft: () => <HeaderLocalization />
-        }}
-      />
+      {!isAuthenticated && (
+        <>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerRight: () => <ThemeToggleButton />,
+              headerLeft: () => <HeaderLocalization />
+            }}
+          />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
+        </>
+      )}
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="PasswordReset" component={PasswordReset} />
       <Stack.Screen name="CreateProfile" component={CreateProfile} />
-      <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
     </Stack.Navigator>
   )
 }
@@ -92,8 +97,9 @@ const AppContent = () => {
   useEffect(() => {
     const handleDeepLinkEvent = event => {
       console.log('event.url:', event.url)
-
+      const urlEnd = event.url.split('com.pet.garrd://')[1].split('#')[0]
       // Manually extracting the token from the hash fragment
+      console.log('urlEnd:', urlEnd)
       let token
       const hash = event.url.split('#')[1]
       if (hash) {
@@ -104,6 +110,8 @@ const AppContent = () => {
       if (token && !auth) {
         console.log('Token is:', token)
         navigationRef.current?.navigate('UpdatePassword', { token })
+      } else if (urlEnd) {
+        navigationRef.current?.navigate('Login')
       }
     }
 
@@ -121,7 +129,7 @@ const AppContent = () => {
       ref={navigationRef}
       theme={isDarkTheme ? CustomDarkTheme : CustomLightTheme}
       linking={linking}>
-      {auth ? <MainTabNavigator /> : <AuthStack />}
+      {auth ? <MainTabNavigator /> : <AuthStack isAuthenticated={!!auth} />}
     </NavigationContainer>
   )
 }
