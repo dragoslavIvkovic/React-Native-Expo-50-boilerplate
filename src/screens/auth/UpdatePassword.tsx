@@ -1,4 +1,3 @@
-// UpdatePassword.js
 import React, { useState } from 'react'
 import {
   View,
@@ -8,23 +7,34 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
+
+// Pretpostavljam da imate funkciju `updatePassword` definisanu negde u kontekstu ili servisu
+// Ako koristite Supabase, Auth0, Firebase ili slično, updatePassword će se razlikovati
+// Ovaj primer pokazuje generički pristup i možda će trebati prilagoditi vašoj implementaciji
 
 const UpdatePassword = () => {
   const navigation = useNavigation()
-  const route = useRoute() // Dodajte ovu liniju
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const token = route.params?.token // Modifikovano da koristi `route.params`
-  console.log('token UpdatePassword', token)
+
+  // Pretpostavka je da funkcija updatePassword vraća Promise
+  // Primer ispod treba prilagoditi vašem API-ju
+  const updatePassword = async newPassword => {
+    try {
+      // Ovde pozovite vašu funkciju za ažuriranje šifre
+      // Na primer: await someAuthService.updatePassword(newPassword);
+      console.log('Password updated', newPassword)
+      return { success: true } // Simulacija uspešnog odgovora
+    } catch (error) {
+      return { success: false, error: error.message }
+    }
+  }
 
   const handleSubmit = async () => {
-    // U UpdatePassword komponenti
-    const token = (route?.params as { token?: string })?.token
-    console.log('token', token)
     if (!password || !confirmPassword) {
       setErrorMsg('Please fill all the fields')
       return
@@ -33,27 +43,18 @@ const UpdatePassword = () => {
       setErrorMsg("Passwords don't match. Try again")
       return
     }
-    if (!token) {
-      setErrorMsg('Access token is missing.')
-      return
-    }
 
     setLoading(true)
-    try {
-      const { error } = await updatePassword(token, password)
-      if (error) {
-        console.log('errore', error)
-        setErrorMsg(error.message)
-        setSuccess(false)
-      } else {
-        setSuccess(true)
-        navigation.navigate('Login')
-      }
-    } catch (error) {
-      setErrorMsg('Error in Updating Password. Please try again')
-    } finally {
-      setLoading(false)
+    const { success, error } = await updatePassword(password)
+    if (!success) {
+      setErrorMsg(error || 'Error in Updating Password. Please try again')
+      setSuccess(false)
+    } else {
+      setSuccess(true)
+      // Navigacija nazad na login ili neku drugu stranicu
+      // navigation.navigate('Login'); // Ažurirajte prema vašoj navigacijskoj strukturi
     }
+    setLoading(false)
   }
 
   return (
