@@ -14,7 +14,8 @@
         "image": "latest",
         "env": {
           "PLATFORM": "android"
-        }
+        },
+          "buildType": "apk"
       },
       "channel": "base"
     },
