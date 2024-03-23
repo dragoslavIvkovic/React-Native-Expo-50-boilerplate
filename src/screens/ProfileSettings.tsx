@@ -2,17 +2,17 @@
 import React from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { useAuth } from '../provider/AuthProvider' // Adjust the path according to your project structure
+import { useAuth } from '../provider/AuthProvider' // Ažuriraj putanju prema strukturi projekta
 
-function ProfileSettings() {
+const ProfileSettings = () => {
+  const navigation = useNavigation()
   const { signOut } = useAuth()
-  const navigation = useNavigation() // Use the useNavigation hook for navigation
 
   const handleSignOut = async () => {
     try {
       await signOut()
       console.log('Successfully signed out')
-      navigation.navigate('Login') // Redirect to Login screen after sign out
+      navigation.navigate('Login') // Redirekcija na ekran za prijavu nakon odjave
     } catch (error) {
       console.error('Error signing out:', error)
     }
@@ -20,13 +20,9 @@ function ProfileSettings() {
 
   return (
     <View style={styles.container}>
-      <Text>Profile Settings Screen</Text>
       <Button title="Sign Out" onPress={handleSignOut} />
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Register" onPress={() => navigation.navigate('Register')} />
-      <Button title="Password Reset" onPress={() => navigation.navigate('PasswordReset')} />
-      <Button title="Create Profile" onPress={() => navigation.navigate('CreateProfile')} />
       <Button title="Update Password" onPress={() => navigation.navigate('UpdatePassword')} />
+      <Button title="Password Reset" onPress={() => navigation.navigate('PasswordReset')} />
     </View>
   )
 }

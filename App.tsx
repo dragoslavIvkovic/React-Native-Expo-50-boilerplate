@@ -21,6 +21,24 @@ import UpdatePassword from '@screens/auth/UpdatePassword'
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
+const ProfileSettingsStack = createNativeStackNavigator()
+
+function ProfileSettingsStackNavigator() {
+  return (
+    <ProfileSettingsStack.Navigator>
+      <ProfileSettingsStack.Screen
+        name="ProfileSettingsMain"
+        component={ProfileSettings}
+        options={{ headerShown: false }}
+      />
+      <ProfileSettingsStack.Screen name="Home" component={Home} />
+      <ProfileSettingsStack.Screen name="PasswordReset" component={PasswordReset} />
+      <ProfileSettingsStack.Screen name="CreateProfile" component={CreateProfile} />
+      <ProfileSettingsStack.Screen name="UpdatePassword" component={UpdatePassword} />
+    </ProfileSettingsStack.Navigator>
+  )
+}
+
 function AuthStack({ isAuthenticated }) {
   return (
     <Stack.Navigator
@@ -69,7 +87,7 @@ function MainTabNavigator() {
         tabBarStyle: [{ display: 'flex' }, null]
       })}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="ProfileSettings" component={ProfileSettings} />
+      <Tab.Screen name="ProfileSettings" component={ProfileSettingsStackNavigator} />
     </Tab.Navigator>
   )
 }
